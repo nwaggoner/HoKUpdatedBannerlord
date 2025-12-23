@@ -1,0 +1,28 @@
+﻿<Module>
+  <Name value="Heal on Kill"/>
+  <Id value="Heal on Kill"/>
+  <Version value="v1.0.2.2"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <ModuleType value="Community" />
+  <DependedModules>
+	<DependedModule Id="Native" DependentVersion="v1.0.2" Optional="false"/>
+	<DependedModule Id="SandBoxCore" DependentVersion="v1.0.2" Optional="false"/>
+	<DependedModule Id="Sandbox" DependentVersion="v1.0.2" Optional="false"/>
+	<DependedModule Id="CustomBattle" DependentVersion="v1.0.2" Optional="false"/>
+	<DependedModule Id="StoryMode" DependentVersion="v1.0.2" Optional="false"/>
+	<DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.9.1" Optional="false"/>
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="Heal on Kill"/>
+      <DLLName value="HealthOnKill.dll"/>
+      <SubModuleClassType value="HealthOnKill.SubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+  <Xmls/>
+</Module>
