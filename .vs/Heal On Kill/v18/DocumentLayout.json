@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\Nathanw\\Desktop\\Heal-On-KIll-main\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|C:\\Users\\Nathanw\\Desktop\\Heal-On-KIll-main\\healthonkillupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|c:\\users\\nathanw\\desktop\\heal-on-kill-main\\healthonkillupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|solutionrelative:healthonkillupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|c:\\users\\nathanw\\desktop\\heal-on-kill-main\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|C:\\Users\\Nathanw\\Desktop\\Heal-On-KIll-main\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -15,7 +15,7 @@
       "RelativeMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill.csproj|solutionrelative:assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|c:\\users\\nathanw\\desktop\\heal-on-kill-main\\submodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|C:\\Users\\Nathanw\\Desktop\\Heal-On-KIll-main\\submodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B16555B2-34B9-4773-B0B0-808673E52763}|Heal On Kill Updated.csproj|solutionrelative:submodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -46,8 +46,7 @@
               "RelativeToolTip": "SubModule.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-24T00:49:21.693Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-24T00:49:21.693Z"
             },
             {
               "$type": "Document",
@@ -69,7 +68,7 @@
               "RelativeDocumentMoniker": "HealthOnKillUpdated.cs",
               "ToolTip": "C:\\Users\\Nathanw\\Desktop\\Heal-On-KIll-main\\HealthOnKillUpdated.cs",
               "RelativeToolTip": "HealthOnKillUpdated.cs",
-              "ViewState": "AgIAALoAAAAAAAAAAAAMwKAAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAALoAAAAAAAAAAAAMwOMAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-24T00:46:18.583Z",
               "EditorCaption": ""
