@@ -1,7 +1,8 @@
-
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthOnKill", "Heal On Kill.csproj", "{B16555B2-34B9-4773-B0B0-808673E52763}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heal On Kill Updated", "Heal On Kill Updated.csproj", "{B16555B2-34B9-4773-B0B0-808673E52763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

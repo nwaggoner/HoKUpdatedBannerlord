@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B16555B2-34B9-4773-B0B0-808673E52763}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>HealthOnKill</AssemblyName>
+    <AssemblyName>HealthOnKillUpdated</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>HealthOnKill</RootNamespace>
+    <RootNamespace>HealthOnKillUpdated</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -37,11 +37,11 @@
     </Reference>
     <Reference Include="Bannerlord.UIExtenderEx, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-	  <HintPath>$(BANNERLORD_GAME_DIR)\Modules\Bannerlord.UIExtenderEx\bin\Win64_Shipping_Client\Bannerlord.UIExtenderEx.dll</HintPath>
+      <HintPath>$(BANNERLORD_GAME_DIR)\Modules\Bannerlord.UIExtenderEx\bin\Win64_Shipping_Client\Bannerlord.UIExtenderEx.dll</HintPath>
     </Reference>
     <Reference Include="MCMv5, Version=5.7.1.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-	  <HintPath>$(BANNERLORD_GAME_DIR)\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll</HintPath>
+      <HintPath>$(BANNERLORD_GAME_DIR)\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -323,8 +323,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HoKSettings.cs" />
-    <Compile Include="HealthOnKill.cs" />
+    <Compile Include="HoKUSettings.cs" />
+    <Compile Include="HealthOnKillUpdated.cs" />
     <Compile Include="SubModule.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
@@ -333,12 +333,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /q "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill"
+    <PostBuildEvent>del /q "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated"
 
-xcopy /y /e /i "$(SolutionDir)Module" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill\"
+xcopy /y /e /i "$(SolutionDir)Module" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated\"
 
-xcopy /y "$(SolutionDir)bin\Debug\HealthOnKill.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill\bin\Win64_Shipping_Client\"
+xcopy /y "$(SolutionDir)bin\Debug\HealthOnKillUpdated.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill\bin\Win64_Shipping_Client\"
 
-xcopy /y "%25BANNERLORD_GAME_DIR%25\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill\bin\Win64_Shipping_Client\"</PostBuildEvent>
+xcopy /y "%25BANNERLORD_GAME_DIR%25\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated\bin\Win64_Shipping_Client\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

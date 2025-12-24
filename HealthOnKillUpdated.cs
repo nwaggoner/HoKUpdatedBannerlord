@@ -9,7 +9,7 @@ using TaleWorlds.Engine;
 using System.Collections.Generic;
 using TaleWorlds.Localization;
 
-namespace HealthOnKill
+namespace HealthOnKillUpdated
 {
   public class HealOnKillMissionBehavior : MissionLogic
   {
@@ -33,7 +33,7 @@ namespace HealthOnKill
         return;
       }
 
-      if (!HoKSettings.Instance.allowRangedHealing && killingBlow.IsMissile)
+      if (!HoKUSettings.Instance.allowRangedHealing && killingBlow.IsMissile)
       {
         return;
       }
@@ -43,30 +43,30 @@ namespace HealthOnKill
       bool isPlayer = affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled;
       bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
       bool logging = false;
-      if (HoKSettings.Instance.playerHealing > 0 & isPlayer)
+      if (HoKUSettings.Instance.playerHealing > 0 & isPlayer)
       {
-        healAmount = (float)HoKSettings.Instance.playerHealing;
-        logging = HoKSettings.Instance.logPlayerHealingToChat;
+        healAmount = (float)HoKUSettings.Instance.playerHealing;
+        logging = HoKUSettings.Instance.logPlayerHealingToChat;
       }
-      else if (((HoKSettings.Instance.friendlyAIHeroHealing <= 0 ? 0 : (isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0 && !isPlayer)
+      else if (((HoKUSettings.Instance.friendlyAIHeroHealing <= 0 ? 0 : (isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0 && !isPlayer)
       {
-        healAmount = (float)HoKSettings.Instance.friendlyAIHeroHealing;
-        logging = HoKSettings.Instance.logHeroHealingToChat;
+        healAmount = (float)HoKUSettings.Instance.friendlyAIHeroHealing;
+        logging = HoKUSettings.Instance.logHeroHealingToChat;
       }
-      else if (HoKSettings.Instance.enemyAIHeroHealing > 0 && isHero && !isAlly && !isPlayer)
+      else if (HoKUSettings.Instance.enemyAIHeroHealing > 0 && isHero && !isAlly && !isPlayer)
       {
-        healAmount = (float)HoKSettings.Instance.enemyAIHeroHealing;
-        logging = HoKSettings.Instance.logHeroHealingToChat;
+        healAmount = (float)HoKUSettings.Instance.enemyAIHeroHealing;
+        logging = HoKUSettings.Instance.logHeroHealingToChat;
       }
-      else if (((HoKSettings.Instance.friendlyAITroopHealing <= 0 ? 0 : (!isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0)
+      else if (((HoKUSettings.Instance.friendlyAITroopHealing <= 0 ? 0 : (!isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0)
       {
-        healAmount = (float)HoKSettings.Instance.friendlyAITroopHealing;
-        logging = HoKSettings.Instance.logTroopHealingToChat;
+        healAmount = (float)HoKUSettings.Instance.friendlyAITroopHealing;
+        logging = HoKUSettings.Instance.logTroopHealingToChat;
       }
-      else if (HoKSettings.Instance.enemyAITroopHealing > 0 && !isHero && !isAlly)
+      else if (HoKUSettings.Instance.enemyAITroopHealing > 0 && !isHero && !isAlly)
       {
-        healAmount = (float)HoKSettings.Instance.enemyAITroopHealing;
-        logging = HoKSettings.Instance.logTroopHealingToChat;
+        healAmount = (float)HoKUSettings.Instance.enemyAITroopHealing;
+        logging = HoKUSettings.Instance.logTroopHealingToChat;
       }
 
       if ((double)healAmount <= 0.0)
@@ -76,7 +76,7 @@ namespace HealthOnKill
 
       int actualHealing = HealAgent(affectorAgent, healAmount);
 
-      if (HoKSettings.Instance.healHorsesToo && affectorAgent.MountAgent != null)
+      if (HoKUSettings.Instance.healHorsesToo && affectorAgent.MountAgent != null)
       {
         HealAgent(affectorAgent.MountAgent, healAmount);
       }
@@ -85,7 +85,7 @@ namespace HealthOnKill
 
       if (logging && actualHealing > 0)
       {
-        TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoK] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
+        TextObject text = new TextObject("{=HOKU5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
         text.SetTextVariable("ATTACKER", affectorAgent.Name);
         text.SetTextVariable("AMOUNT", actualHealing.ToString());
         text.SetTextVariable("VICTIM", affectedAgent.Name.ToString());
@@ -106,7 +106,7 @@ namespace HealthOnKill
         return;
       }
 
-      if (!HoKSettings.Instance.allowRangedHealing && b.IsMissile)
+      if (!HoKUSettings.Instance.allowRangedHealing && b.IsMissile)
       {
         return;
       }
@@ -116,30 +116,30 @@ namespace HealthOnKill
       bool isPlayer = attacker.IsMainAgent || attacker.IsPlayerControlled;
       bool logging = false;
       bool isHero = (attacker.Character != null && attacker.Character.IsHero);
-      if ((double)HoKSettings.Instance.playerLifeLeechPercent > 0.0 & isPlayer)
+      if ((double)HoKUSettings.Instance.playerLifeLeechPercent > 0.0 & isPlayer)
       {
-        healAmount = (float)b.InflictedDamage * HoKSettings.Instance.playerLifeLeechPercent;
-        logging = HoKSettings.Instance.logPlayerHealingToChat;
+        healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.playerLifeLeechPercent;
+        logging = HoKUSettings.Instance.logPlayerHealingToChat;
       }
-      else if ((((double)HoKSettings.Instance.friendlyAIHeroLifeLeechPercent <= 0.0 ? 0 : (isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0 && !isPlayer)
+      else if ((((double)HoKUSettings.Instance.friendlyAIHeroLifeLeechPercent <= 0.0 ? 0 : (isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0 && !isPlayer)
       {
-        healAmount = (float)b.InflictedDamage * HoKSettings.Instance.friendlyAIHeroLifeLeechPercent;
-        logging = HoKSettings.Instance.logHeroHealingToChat;
+        healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.friendlyAIHeroLifeLeechPercent;
+        logging = HoKUSettings.Instance.logHeroHealingToChat;
       }
-      else if ((double)HoKSettings.Instance.enemyAIHeroLifeLeechPercent > 0.0 && isHero && !isAlly && !isPlayer)
+      else if ((double)HoKUSettings.Instance.enemyAIHeroLifeLeechPercent > 0.0 && isHero && !isAlly && !isPlayer)
       {
-        healAmount = (float)b.InflictedDamage * HoKSettings.Instance.enemyAIHeroLifeLeechPercent;
-        logging = HoKSettings.Instance.logHeroHealingToChat;
+        healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.enemyAIHeroLifeLeechPercent;
+        logging = HoKUSettings.Instance.logHeroHealingToChat;
       }
-      else if ((((double)HoKSettings.Instance.friendlyAITroopLifeLeechPercent <= 0.0 ? 0 : (!isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0)
+      else if ((((double)HoKUSettings.Instance.friendlyAITroopLifeLeechPercent <= 0.0 ? 0 : (!isHero ? 1 : 0)) & (isAlly ? 1 : 0)) != 0)
       {
-        healAmount = (float)b.InflictedDamage * HoKSettings.Instance.friendlyAITroopLifeLeechPercent;
-        logging = HoKSettings.Instance.logTroopHealingToChat;
+        healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.friendlyAITroopLifeLeechPercent;
+        logging = HoKUSettings.Instance.logTroopHealingToChat;
       }
-      else if ((double)HoKSettings.Instance.enemyAITroopLifeLeechPercent > 0.0 && !isHero && !isAlly)
+      else if ((double)HoKUSettings.Instance.enemyAITroopLifeLeechPercent > 0.0 && !isHero && !isAlly)
       {
-        healAmount = (float)b.InflictedDamage * HoKSettings.Instance.enemyAITroopLifeLeechPercent;
-        logging = HoKSettings.Instance.logTroopHealingToChat;
+        healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.enemyAITroopLifeLeechPercent;
+        logging = HoKUSettings.Instance.logTroopHealingToChat;
       }
 
       if ((double)healAmount <= 0.0)
@@ -149,7 +149,7 @@ namespace HealthOnKill
 
       int actualHealing = HealAgent(attacker, healAmount);
 
-      if (HoKSettings.Instance.healHorsesToo && attacker.MountAgent != null)
+      if (HoKUSettings.Instance.healHorsesToo && attacker.MountAgent != null)
       {
         HealAgent(attacker.MountAgent, healAmount);
       }
@@ -158,7 +158,7 @@ namespace HealthOnKill
 
       if (logging && actualHealing > 0)
       {
-        TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoK] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
+        TextObject text = new TextObject("{=HOKUMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
         text.SetTextVariable("ATTACKER", attacker.Name);
         text.SetTextVariable("AMOUNT", actualHealing.ToString());
         text.SetTextVariable("VICTIM", victim.Name);
@@ -177,7 +177,7 @@ namespace HealthOnKill
 
     private void DoMedicineSkillup(Agent a, float amount)
     {
-      if (HoKSettings.Instance.enableMedicineSkillGain && a.Character != null)
+      if (HoKUSettings.Instance.enableMedicineSkillGain && a.Character != null)
       {
         if (a.IsHero)
         {

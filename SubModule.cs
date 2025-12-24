@@ -1,6 +1,6 @@
 ﻿using TaleWorlds.MountAndBlade;
 
-namespace HealthOnKill
+namespace HealthOnKillUpdated
 {
   public class SubModule : MBSubModuleBase
   {

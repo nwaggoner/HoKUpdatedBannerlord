@@ -2,9 +2,9 @@
 using MCM.Abstractions.Base;
 using MCM.Abstractions.Base.Global;
 
-namespace HealthOnKill
+namespace HealthOnKillUpdated
 {
-  internal sealed class HoKSettings : AttributeGlobalSettings<HoKSettings>
+  internal sealed class HoKUSettings : AttributeGlobalSettings<HoKUSettings>
   {
     private bool _useStandardOptionScreen = false;
 
