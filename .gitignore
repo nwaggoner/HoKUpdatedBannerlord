@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Specific Steam Workshop publishing XML/JPG files
+WorkshopCreate.xml
+WorkshopUpdate.xml
+HoKU.jpg
