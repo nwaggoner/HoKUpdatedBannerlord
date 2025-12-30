@@ -1,18 +1,12 @@
-﻿using TaleWorlds.MountAndBlade;
+﻿namespace HealthOnKillUpdated {
+    public class SubModule : MBSubModuleBase {
+        public override void OnMissionBehaviorInitialize(Mission mission) {
+            if (mission == null) {
+                return;
+            }
+            base.OnMissionBehaviorInitialize(mission);
 
-namespace HealthOnKillUpdated
-{
-  public class SubModule : MBSubModuleBase
-  {
-    public override void OnMissionBehaviorInitialize(Mission mission)
-    {
-      if (mission == null)
-      {
-        return;
-      }
-      base.OnMissionBehaviorInitialize(mission);
-
-      mission.AddMissionBehavior(new HealOnKillMissionBehavior());
+            mission.AddMissionBehavior(new HealOnKillMissionBehavior());
+        }
     }
-  }
 }
