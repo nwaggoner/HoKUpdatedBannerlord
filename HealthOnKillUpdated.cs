@@ -36,23 +36,27 @@ namespace HealthOnKillUpdated {
             bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
             bool logging = false;
 
-
+            // Player heal
             if (HoKUSettings.Instance.playerHealing > 0 && isPlayer) {
                 healAmount = (float)HoKUSettings.Instance.playerHealing;
                 logging = HoKUSettings.Instance.logPlayerHealingToChat;
             }
+            // Ally Hero heal
             else if (!isPlayer && isAlly && isHero && HoKUSettings.Instance.friendlyAIHeroHealing > 0) {
                 healAmount = (float)HoKUSettings.Instance.friendlyAIHeroHealing;
                 logging = HoKUSettings.Instance.logHeroHealingToChat;
             }
+            // Enemy Hero heal
             else if (HoKUSettings.Instance.enemyAIHeroHealing > 0 && isHero && !isAlly && !isPlayer) {
                 healAmount = (float)HoKUSettings.Instance.enemyAIHeroHealing;
                 logging = HoKUSettings.Instance.logHeroHealingToChat;
             }
+            // Ally Troop heal
             else if (isAlly && !isHero && HoKUSettings.Instance.friendlyAITroopHealing > 0) {
                 healAmount = (float)HoKUSettings.Instance.friendlyAITroopHealing;
                 logging = HoKUSettings.Instance.logTroopHealingToChat;
             }
+            // Enemy Troop heal
             else if (HoKUSettings.Instance.enemyAITroopHealing > 0 && !isHero && !isAlly) {
                 healAmount = (float)HoKUSettings.Instance.enemyAITroopHealing;
                 logging = HoKUSettings.Instance.logTroopHealingToChat;
