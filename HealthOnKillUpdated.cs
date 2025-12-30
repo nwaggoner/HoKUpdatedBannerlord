@@ -85,7 +85,7 @@ namespace HealthOnKillUpdated
 
       if (logging && actualHealing > 0)
       {
-        TextObject text = new TextObject("{=HOKU5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
+        TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
         text.SetTextVariable("ATTACKER", affectorAgent.Name);
         text.SetTextVariable("AMOUNT", actualHealing.ToString());
         text.SetTextVariable("VICTIM", affectedAgent.Name.ToString());
@@ -96,7 +96,7 @@ namespace HealthOnKillUpdated
     public override void OnRegisterBlow(
       Agent attacker,
       Agent victim,
-      GameEntity realHitEntity,
+      WeakGameEntity realHitEntity,
       Blow b,
       ref AttackCollisionData collisionData,
       in MissionWeapon attackerWeapon)
@@ -158,7 +158,7 @@ namespace HealthOnKillUpdated
 
       if (logging && actualHealing > 0)
       {
-        TextObject text = new TextObject("{=HOKUMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
+        TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
         text.SetTextVariable("ATTACKER", attacker.Name);
         text.SetTextVariable("AMOUNT", actualHealing.ToString());
         text.SetTextVariable("VICTIM", victim.Name);

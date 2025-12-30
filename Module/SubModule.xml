@@ -1,7 +1,7 @@
 ﻿<Module>
-  <Name value="Heal on Kill"/>
-  <Id value="Heal on Kill"/>
-  <Version value="v1.0.2.2"/>
+  <Name value="Heal on Kill Updated"/>
+  <Id value="Heal on Kill Updated"/>
+  <Version value="v1.0.2.3"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <ModuleType value="Community" />
@@ -16,8 +16,8 @@
   <SubModules>
     <SubModule>
       <Name value="Heal on Kill"/>
-      <DLLName value="HealthOnKill.dll"/>
-      <SubModuleClassType value="HealthOnKill.SubModule"/>
+      <DLLName value="HealthOnKillUpdated.dll"/>
+      <SubModuleClassType value="HealthOnKillUpdated.SubModule"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />
         <Tag key="IsNoRenderModeElement" value="false" />

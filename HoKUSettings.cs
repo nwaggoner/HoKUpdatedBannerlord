@@ -10,7 +10,7 @@ namespace HealthOnKillUpdated
 
     public override string Id => "HealOnKill_v1";
 
-    public override string DisplayName => "Heal on Kill";
+    public override string DisplayName => "Heal on Kill Updated";
 
     public override string FolderName => "HoK";
 
