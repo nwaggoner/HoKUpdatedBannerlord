@@ -1,21 +1,21 @@
 ﻿<Module>
   <Name value="Heal on Kill Updated"/>
-  <Id value="Heal on Kill Updated"/>
-  <Version value="v1.0.2.3"/>
+  <Id value="HealthOnKillUpdated"/>
+  <Version value="v1.1.0.1"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <ModuleType value="Community" />
   <DependedModules>
-	<DependedModule Id="Native" DependentVersion="v1.0.2" Optional="false"/>
-	<DependedModule Id="SandBoxCore" DependentVersion="v1.0.2" Optional="false"/>
-	<DependedModule Id="Sandbox" DependentVersion="v1.0.2" Optional="false"/>
-	<DependedModule Id="CustomBattle" DependentVersion="v1.0.2" Optional="false"/>
-	<DependedModule Id="StoryMode" DependentVersion="v1.0.2" Optional="false"/>
-	<DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.9.1" Optional="false"/>
+	<DependedModule Id="Native" DependentVersion="v1.3.13" Optional="false"/>
+	<DependedModule Id="SandBoxCore" DependentVersion="v1.3.13" Optional="false"/>
+	<DependedModule Id="Sandbox" DependentVersion="v1.3.13" Optional="false"/>
+	<DependedModule Id="CustomBattle" DependentVersion="v1.3.13" Optional="false"/>
+	<DependedModule Id="StoryMode" DependentVersion="v1.3.13" Optional="false"/>
+	<DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.11.3" Optional="false"/>
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="Heal on Kill"/>
+      <Name value="HealthOnKillUpdated"/>
       <DLLName value="HealthOnKillUpdated.dll"/>
       <SubModuleClassType value="HealthOnKillUpdated.SubModule"/>
       <Tags>
