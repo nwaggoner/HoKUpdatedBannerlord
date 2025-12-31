@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("HealthOnKillUpdated")]
+[assembly: AssemblyTitle("HealOnKillUpdated")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HealthOnKillUpdated")]
+[assembly: AssemblyProduct("HealOnKillUpdated")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: ComVisible(false)]
