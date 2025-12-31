@@ -1,4 +1,8 @@
-﻿namespace HealOnKillUpdated {
+﻿using MCM.Abstractions.Attributes.v2;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.Base.Global;
+
+namespace HealOnKillUpdated {
     internal sealed class HoKUSettings : AttributeGlobalSettings<HoKUSettings> {
         private bool _useStandardOptionScreen = false;
 

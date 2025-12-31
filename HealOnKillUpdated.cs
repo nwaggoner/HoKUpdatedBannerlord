@@ -1,6 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using TaleWorlds.Core;
+using TaleWorlds.Library;
+using TaleWorlds.MountAndBlade;
+using TaleWorlds.CampaignSystem;
 using System.Linq;
+using TaleWorlds.ObjectSystem;
+using TaleWorlds.Engine;
+using System.Collections.Generic;
+using TaleWorlds.Localization;
 
 namespace HealOnKillUpdated {
     public class HealOnKillMissionBehavior : MissionLogic {

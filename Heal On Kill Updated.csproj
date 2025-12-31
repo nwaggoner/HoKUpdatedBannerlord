@@ -6,18 +6,18 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B16555B2-34B9-4773-B0B0-808673E52763}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>HealthOnKillUpdated</AssemblyName>
+    <AssemblyName>HealOnKillUpdated</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>HealthOnKillUpdated</RootNamespace>
+    <RootNamespace>HealOnKillUpdated</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>Module\bin\Win64_Shipping_Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +26,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>Module\bin\Win64_Shipping_Client\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -372,12 +372,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /q "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated"
-
-xcopy /y /e /i "$(SolutionDir)Module" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated\"
-
-xcopy /y "$(SolutionDir)bin\Debug\HealthOnKillUpdated.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill\bin\Win64_Shipping_Client\"
-
-xcopy /y "%25BANNERLORD_GAME_DIR%25\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated\bin\Win64_Shipping_Client\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

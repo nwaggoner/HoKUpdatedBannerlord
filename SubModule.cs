@@ -1,4 +1,6 @@
-﻿namespace HealOnKillUpdated {
+﻿using TaleWorlds.MountAndBlade;
+
+namespace HealOnKillUpdated {
     public class SubModule : MBSubModuleBase {
         public override void OnMissionBehaviorInitialize(Mission mission) {
             if (mission == null) {
