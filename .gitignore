@@ -362,7 +362,13 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+
+
+########	Custom Ignores	#########
 # Specific Steam Workshop publishing XML/JPG files
 WorkshopCreate.xml
 WorkshopUpdate.xml
 HoKU.jpg
+
+# Folders for debugging/building DLLs
+obj/
