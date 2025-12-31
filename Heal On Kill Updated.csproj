@@ -363,7 +363,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HoKUSettings.cs" />
-    <Compile Include="HealthOnKillUpdated.cs" />
+    <Compile Include="HealOnKillUpdated.cs" />
     <Compile Include="SubModule.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
