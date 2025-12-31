@@ -42,17 +42,17 @@ namespace HealthOnKillUpdated {
                 logging = HoKUSettings.Instance.logPlayerHealingToChat;
             }
             // Ally Hero heal
-            else if (!isPlayer && isAlly && isHero && HoKUSettings.Instance.friendlyAIHeroHealing > 0) {
+            else if (HoKUSettings.Instance.friendlyAIHeroHealing > 0 && isAlly && !isPlayer && isHero) {
                 healAmount = (float)HoKUSettings.Instance.friendlyAIHeroHealing;
                 logging = HoKUSettings.Instance.logHeroHealingToChat;
             }
             // Enemy Hero heal
-            else if (HoKUSettings.Instance.enemyAIHeroHealing > 0 && isHero && !isAlly && !isPlayer) {
+            else if (HoKUSettings.Instance.enemyAIHeroHealing > 0 && !isAlly && !isPlayer && isHero) {
                 healAmount = (float)HoKUSettings.Instance.enemyAIHeroHealing;
                 logging = HoKUSettings.Instance.logHeroHealingToChat;
             }
             // Ally Troop heal
-            else if (isAlly && !isHero && HoKUSettings.Instance.friendlyAITroopHealing > 0) {
+            else if (HoKUSettings.Instance.friendlyAITroopHealing > 0 && !isHero && isAlly) {
                 healAmount = (float)HoKUSettings.Instance.friendlyAITroopHealing;
                 logging = HoKUSettings.Instance.logTroopHealingToChat;
             }
@@ -62,7 +62,7 @@ namespace HealthOnKillUpdated {
                 logging = HoKUSettings.Instance.logTroopHealingToChat;
             }
 
-            if ((double)healAmount > 0.0) {
+            if (healAmount > 0.0f) {
 
                 int actualHealing = HealAgent(affectorAgent, healAmount);
 
@@ -111,33 +111,33 @@ namespace HealthOnKillUpdated {
 
 
             // Player lifesteal
-            if (isPlayer && (double)HoKUSettings.Instance.playerLifeLeechPercent > 0.0) {
-                healAmount = (float)b.InflictedDamage * (float)HoKUSettings.Instance.playerLifeLeechPercent;
+            if (HoKUSettings.Instance.playerLifeLeechPercent > 0.0f && isPlayer) {
+                healAmount = b.InflictedDamage * HoKUSettings.Instance.playerLifeLeechPercent;
                 logging = HoKUSettings.Instance.logPlayerHealingToChat;
             }
             // Ally Hero lifesteal
-            else if (!isPlayer && isAlly && isHero && (double)HoKUSettings.Instance.friendlyAIHeroLifeLeechPercent > 0.0) {
-                healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.friendlyAIHeroLifeLeechPercent;
+            else if (HoKUSettings.Instance.friendlyAIHeroLifeLeechPercent > 0.0f && isAlly && !isPlayer && isHero) {
+                healAmount = b.InflictedDamage * HoKUSettings.Instance.friendlyAIHeroLifeLeechPercent;
                 logging = HoKUSettings.Instance.logHeroHealingToChat;
             }
             // Enemy Hero lifesteal  
-            else if (!isPlayer && !isAlly && isHero && (double)HoKUSettings.Instance.enemyAIHeroLifeLeechPercent > 0.0) {
-                healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.enemyAIHeroLifeLeechPercent;
+            else if (HoKUSettings.Instance.enemyAIHeroLifeLeechPercent > 0.0f && !isAlly && !isPlayer && isHero) {
+                healAmount = b.InflictedDamage * HoKUSettings.Instance.enemyAIHeroLifeLeechPercent;
                 logging = HoKUSettings.Instance.logHeroHealingToChat;
             }
             // Ally Troop lifesteal
-            else if (!isPlayer && isAlly && !isHero && (double)HoKUSettings.Instance.friendlyAITroopLifeLeechPercent > 0.0) {
-                healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.friendlyAITroopLifeLeechPercent;
+            else if (HoKUSettings.Instance.friendlyAITroopLifeLeechPercent > 0.0f && !isHero && isAlly) {
+                healAmount = b.InflictedDamage * HoKUSettings.Instance.friendlyAITroopLifeLeechPercent;
                 logging = HoKUSettings.Instance.logTroopHealingToChat;
             }
             // Enemy Troop lifesteal
-            else if (!isPlayer && !isAlly && !isHero && (double)HoKUSettings.Instance.enemyAITroopLifeLeechPercent > 0.0) {
-                healAmount = (float)b.InflictedDamage * HoKUSettings.Instance.enemyAITroopLifeLeechPercent;
+            else if (HoKUSettings.Instance.enemyAITroopLifeLeechPercent > 0.0f && !isHero && !isAlly) {
+                healAmount = b.InflictedDamage * HoKUSettings.Instance.enemyAITroopLifeLeechPercent;
                 logging = HoKUSettings.Instance.logTroopHealingToChat;
             }
 
 
-            if ((double)healAmount > 0.0) {
+            if (healAmount > 0.0f) {
 
                 int actualHealing = HealAgent(attacker, healAmount);
 
@@ -161,11 +161,11 @@ namespace HealthOnKillUpdated {
 
 
         private int HealAgent(Agent a, float amount) {
-            amount = (int)(amount < 1f ? 1f : amount);
+            amount = (amount < 1.0f ? 1.0f : amount);
             float health = a.Health;
             float maxHitPoints = a.HealthLimit;
             a.Health = a.Health + amount < maxHitPoints ? a.Health + amount : maxHitPoints;
-            return (int)((double)a.Health - (double)health);
+            return (int)(a.Health - health);
         }
 
 
