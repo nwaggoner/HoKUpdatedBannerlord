@@ -372,12 +372,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /q "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated"
-
-xcopy /y /e /i "$(SolutionDir)Module" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated\"
-
-xcopy /y "$(SolutionDir)bin\Debug\HealthOnKillUpdated.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill\bin\Win64_Shipping_Client\"
-
-xcopy /y "%25BANNERLORD_GAME_DIR%25\Modules\Bannerlord.MBOptionScreen\bin\Win64_Shipping_Client\MCMv5.dll" "%25BANNERLORD_GAME_DIR%25\Modules\Heal on Kill Updated\bin\Win64_Shipping_Client\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
