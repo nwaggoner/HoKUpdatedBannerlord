@@ -1,4 +1,4 @@
-﻿namespace HealthOnKillUpdated {
+﻿namespace HealOnKillUpdated {
     public class SubModule : MBSubModuleBase {
         public override void OnMissionBehaviorInitialize(Mission mission) {
             if (mission == null) {

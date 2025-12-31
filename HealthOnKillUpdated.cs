@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HealthOnKillUpdated {
+namespace HealOnKillUpdated {
     public class HealOnKillMissionBehavior : MissionLogic {
         
         private readonly List<CharacterObject> _characterCache;

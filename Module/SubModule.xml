@@ -1,6 +1,6 @@
 ﻿<Module>
   <Name value="Heal on Kill Updated"/>
-  <Id value="HealthOnKillUpdated"/>
+  <Id value="HealOnKillUpdated"/>
   <Version value="v1.1.0.1"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
@@ -15,9 +15,9 @@
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="HealthOnKillUpdated"/>
-      <DLLName value="HealthOnKillUpdated.dll"/>
-      <SubModuleClassType value="HealthOnKillUpdated.SubModule"/>
+      <Name value="HealOnKillUpdated"/>
+      <DLLName value="HealOnKillUpdated.dll"/>
+      <SubModuleClassType value="HealOnKillUpdated.SubModule"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />
         <Tag key="IsNoRenderModeElement" value="false" />

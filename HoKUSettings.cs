@@ -1,4 +1,4 @@
-﻿namespace HealthOnKillUpdated {
+﻿namespace HealOnKillUpdated {
     internal sealed class HoKUSettings : AttributeGlobalSettings<HoKUSettings> {
         private bool _useStandardOptionScreen = false;
 
