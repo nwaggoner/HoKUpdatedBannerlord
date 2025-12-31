@@ -368,7 +368,7 @@ FodyWeavers.xsd
 # Specific Steam Workshop publishing XML/JPG files
 WorkshopCreate.xml
 WorkshopUpdate.xml
-HoKU.jpg
+*.jpg
 
 # Folders for debugging/building DLLs
 obj/
