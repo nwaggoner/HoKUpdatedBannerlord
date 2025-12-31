@@ -4,7 +4,7 @@
         <!-- Can be found in the URL of your workshop item -->
     </GetItem>
     <UpdateItem>
-        <ModuleFolder Value="E:\SteamApps\common\Mount &amp; Blade II Bannerlord\Modules\HoKU"/>
+        <ModuleFolder Value="E:\SteamLibrary\steampps\common\Mount &amp; Blade II Bannerlord\Modules\HoKU"/>
         <!-- A direct path of your module -->   
         <ChangeNotes Value="-General refactoring and optimization of the code-base. Documented for maintainability." />
         <!-- Insert patch notes -->
@@ -19,5 +19,6 @@
             <Tag Value="Singleplayer" />
             <Tag Value="v1.3.13" />
         </Tags>
+		<Image Value="E:\SteamLibrary\steampps\common\Mount &amp; Blade II Bannerlord\Modules\HoKU\HoKU.jpg"/>
     </UpdateItem>
 </Tasks>
