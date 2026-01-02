@@ -1,6 +1,5 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
-using MCM.Abstractions.Base;
 using MCM.Abstractions.Base.Global;
 
 
@@ -9,9 +8,9 @@ namespace HealOnKillUpdated {
         
         private bool _useStandardOptionScreen = false;
 
-        public override string Id => "HealOnKill_v1";
-        public override string DisplayName => "Heal on Kill Updated";
-        public override string FolderName => "HoK";
+        public override string Id => "HoKUpdated_v1";
+        public override string DisplayName => "Heal on Kill Updated 1.3.13";
+        public override string FolderName => "HoKUpdated";
         public override string FormatType => "json2";
 
 
@@ -35,39 +34,47 @@ namespace HealOnKillUpdated {
         [SettingPropertyGroup("Health per Kill", GroupOrder = 1)]
         public int enemyAITroopHealing { get; set; } = 0;
 
+        
 
-
-        [SettingPropertyFloatingInteger("{=HOKqrGwnJy3M}Player Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKt1UZbPrEb}Heals the player by percentage of damage of done.", Order = 1, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKqrGwnJy3M}Player Life Leech", 0f, 3f, "#0%", HintText = "{=HOKt1UZbPrEb}Heals the player by percentage of damage of done.", Order = 1, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float playerLifeLeechPercent { get; set; } = 0.15f;
 
-        [SettingPropertyFloatingInteger("{=HOKzqH9tLiTH}Friendly AI Hero Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKWbg0KQXmU}Heals friendly AI heroes (companions/family/friendly lords) by percentage of damage done.", Order = 2, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKzqH9tLiTH}Friendly AI Hero Life Leech", 0f, 3f, "#0%", HintText = "{=HOKWbg0KQXmU}Heals friendly AI heroes (companions/family/friendly lords) by percentage of damage done.", Order = 2, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float friendlyAIHeroLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyFloatingInteger("{=HOKlkkghJF1z}Enemy AI Hero Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKjmEYyVf0s}Heals enemy AI heroes (enemy lords) by percentage of damage done.", Order = 3, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKlkkghJF1z}Enemy AI Hero Life Leech", 0f, 3f, "#0%", HintText = "{=HOKjmEYyVf0s}Heals enemy AI heroes (enemy lords) by percentage of damage done.", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float enemyAIHeroLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyFloatingInteger("{=HOKtxiCNy3zI}Friendly AI Troop Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKfqSNv6jN4}Heals friendly troops by percentage of damage done.", Order = 4, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKtxiCNy3zI}Friendly AI Troop Life Leech", 0f, 3f, "#0%", HintText = "{=HOKfqSNv6jN4}Heals friendly troops by percentage of damage done.", Order = 4, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float friendlyAITroopLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyFloatingInteger("{=HOKoBDhrhWb1}Enemy AI Troop Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKxDKdnJiEZ}Heals enemy troops by percentage of damage done.", Order = 5, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKoBDhrhWb1}Enemy AI Troop Life Leech", 0f, 3f, "#0%", HintText = "{=HOKxDKdnJiEZ}Heals enemy troops by percentage of damage done.", Order = 5, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float enemyAITroopLifeLeechPercent { get; set; } = 0.00f;
 
 
 
-        [SettingPropertyBool("{=HOKxaE9F7AUy}Heal Horses Too", HintText = "{=HOKgABdvxkl0}For mounted troops (and you) all healing done is also applied to the mount.", Order = 1, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKxaE9F7AUy}Allow Horse Healing", HintText = "{=HOKgABdvxkl0}For mounted troops (and you) all healing done is also applied to the mount.", Order = 1, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool healHorsesToo { get; set; } = true;
 
-        [SettingPropertyBool("{=HOKNjCLqQi5A}Allow Ranged Healing", HintText = "{=HOKWw2fllAec}Allow healing on ranged damage", Order = 2, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Horse Healing Multiplier", 0f, 2f, "#0%", HintText = "{=HOKBtzD2leY7}Control how much healing your mount gets (default is 100%).", Order = 2, RequireRestart = false)]
+        [SettingPropertyGroup("Misc.", GroupOrder = 3)]
+        public float mountHealAmount { get; set; } = 1.00f;
+
+        [SettingPropertyBool("{=HOKNjCLqQi5A}Allow Ranged Healing", HintText = "{=HOKWw2fllAec}Allow healing on ranged damage", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool allowRangedHealing { get; set; } = true;
 
-        [SettingPropertyBool("{=HOKHvyPZeDlG}Enable Medicine Skill Gain", HintText = "{=HOKJnU6UxTaU}Give medicine skill for healing.", Order = 3, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Ranged Healing Multiplier", 0f, 1f, "#0%", HintText = "{=HOKeohKUFxa3}Control how much healing ranged attacks get (default is 100%).", Order = 4, RequireRestart = false)]
+        [SettingPropertyGroup("Misc.", GroupOrder = 3)]
+        public float rangeHealAmount { get; set; } = 1.00f;
+
+        [SettingPropertyBool("{=HOKHvyPZeDlG}Enable Medicine Skill Gain", HintText = "{=HOKJnU6UxTaU}Give medicine skill for healing.", Order = 5, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool enableMedicineSkillGain { get; set; } = false;
 
@@ -97,7 +104,7 @@ namespace HealOnKillUpdated {
                 if (this._useStandardOptionScreen == value)
                     return;
                 this._useStandardOptionScreen = value;
-                ((BaseSettings)this).OnPropertyChanged(nameof(UseStandardOptionScreen));
+                this.OnPropertyChanged(nameof(UseStandardOptionScreen));
             }
         }
     }

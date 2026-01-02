@@ -24,11 +24,15 @@
 		<string id="HOKfqSNv6jN4" text="Heals friendly troops by percentage of damage done." />
 		<string id="HOKoBDhrhWb1" text="Enemy AI Troop Life Leech" />
 		<string id="HOKxDKdnJiEZ" text="Heals enemy troops by percentage of damage done." />
-		<string id="HOKxaE9F7AUy" text="Heal Horses Too" />
+		<string id="HOKxaE9F7AUy" text="Allow Horse Healing" />
 		<string id="HOKgABdvxkl0" text="For mounted troops (and you) all healing done is also applied to the mount." />
+		<string id="HOK1by8uIITs" text="Horse Healing Multiplier" />
+		<string id="HOKBtzD2leY7" text="Control how much healing your mount gets (default is 100%)." />
 		<string id="HOKNjCLqQi5A" text="Allow Ranged Healing" />
 		<string id="HOKWw2fllAec" text="Allow healing on ranged damage" />
-		<string id="HOKMuUyjaika" text="Log Player Healing to Chat" />
+		<string id="HOK1by8uIITs" text="Ranged Healing Multiplier" />
+		<string id="HOKeohKUFxa3" text="Control how much healing ranged attacks get (default is 100%)." />
+		<string id="HOKeohKUFxa3" text="Log Player Healing to Chat" />
 		<string id="HOKBtXbn11mL" text="Log AI Hero Healing to Chat" />
 		<string id="HOKxe6PdaTxL" text="Log Troop Healing to Chat" />
 		<string id="HOKr4xGiDQeC" text="(Warning: this is just for debugging, don't enable this unless you like spam.)" />

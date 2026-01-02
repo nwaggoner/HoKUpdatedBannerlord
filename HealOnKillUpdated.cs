@@ -37,53 +37,61 @@ namespace HealOnKillUpdated {
                 return;
             }
 
-            float healAmount = 0.00f;
+            int  healAmount = 0;
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
             bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
             bool logging = false;
 
+
             HoKUSettings hokInstance = HoKUSettings.Instance;
 
             // Player heal
             if (hokInstance.playerHealing > 0 && isPlayer) {
-                healAmount = (float)hokInstance.playerHealing;
+                healAmount = hokInstance.playerHealing;
                 logging = hokInstance.logPlayerHealingToChat;
             }
             // Ally Hero heal
             else if (hokInstance.friendlyAIHeroHealing > 0 && isAlly && !isPlayer && isHero) {
-                healAmount = (float)hokInstance.friendlyAIHeroHealing;
+                healAmount = hokInstance.friendlyAIHeroHealing;
                 logging = hokInstance.logHeroHealingToChat;
             }
             // Enemy Hero heal
             else if (hokInstance.enemyAIHeroHealing > 0 && !isAlly && !isPlayer && isHero) {
-                healAmount = (float)hokInstance.enemyAIHeroHealing;
+                healAmount = hokInstance.enemyAIHeroHealing;
                 logging = hokInstance.logHeroHealingToChat;
             }
             // Ally Troop heal
             else if (hokInstance.friendlyAITroopHealing > 0 && !isHero && isAlly) {
-                healAmount = (float)hokInstance.friendlyAITroopHealing;
+                healAmount = hokInstance.friendlyAITroopHealing;
                 logging = hokInstance.logTroopHealingToChat;
             }
             // Enemy Troop heal
             else if (hokInstance.enemyAITroopHealing > 0 && !isHero && !isAlly) {
-                healAmount = (float)hokInstance.enemyAITroopHealing;
+                healAmount = hokInstance.enemyAITroopHealing;
                 logging = hokInstance.logTroopHealingToChat;
             }
 
-            if (healAmount > 0.00f) {
+
+            // Heal ranged attacks based on the percentage set in MCM
+            if (hokInstance.allowRangedHealing && killingBlow.IsMissile) {
+                healAmount = healAmount * (int)hokInstance.rangeHealAmount;
+            }
+
+
+            if (healAmount > 0) {
 
                 int actualHealing = HealAgent(affectorAgent, healAmount);
 
                 // Heal your horse or camel.
                 if (hokInstance.healHorsesToo && affectorAgent.MountAgent != null) {
-                    HealAgent(affectorAgent.MountAgent, healAmount);
+                    HealAgent(affectorAgent.MountAgent, (float)healAmount * hokInstance.mountHealAmount);
                 }
 
-                DoMedicineSkillup(affectorAgent, healAmount);
+                DoMedicineSkillup(affectorAgent, (float)healAmount);
 
                 if (logging && actualHealing > 0) {
-                    TextObject text = new TextObject("{=HOK5z9gzZlpT} {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
+                    TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
                     text.SetTextVariable("ATTACKER", affectorAgent.Name);
                     text.SetTextVariable("AMOUNT", actualHealing.ToString());
                     text.SetTextVariable("VICTIM", affectedAgent.Name.ToString());
@@ -112,54 +120,62 @@ namespace HealOnKillUpdated {
                 return;
             }
 
-            float healAmount = 0.00f;
+            float healAmount = 0f;
             bool isAlly = (attacker.Team.IsPlayerTeam || attacker.Team.IsPlayerAlly);
             bool isPlayer = (attacker.IsMainAgent || attacker.IsPlayerControlled);
             bool isHero = (attacker.Character != null && attacker.Character.IsHero);
             bool logging = false;
+            float inflictedDamage = (float)b.InflictedDamage;
+
 
             HoKUSettings hokInstance = HoKUSettings.Instance;
-
+           
             // Player lifesteal
-            if (hokInstance.playerLifeLeechPercent > 0.00f && isPlayer) {
-                healAmount = b.InflictedDamage * hokInstance.playerLifeLeechPercent;
+            if (hokInstance.playerLifeLeechPercent > 0f && isPlayer) {
+                healAmount = inflictedDamage * hokInstance.playerLifeLeechPercent;
                 logging = hokInstance.logPlayerHealingToChat;
             }
             // Ally Hero lifesteal
-            else if (hokInstance.friendlyAIHeroLifeLeechPercent > 0.00f && isAlly && !isPlayer && isHero) {
-                healAmount = b.InflictedDamage * hokInstance.friendlyAIHeroLifeLeechPercent;
+            else if (hokInstance.friendlyAIHeroLifeLeechPercent > 0f && isAlly && !isPlayer && isHero) {
+                healAmount = inflictedDamage * hokInstance.friendlyAIHeroLifeLeechPercent;
                 logging = hokInstance.logHeroHealingToChat;
             }
             // Enemy Hero lifesteal  
-            else if (hokInstance.enemyAIHeroLifeLeechPercent > 0.00f && !isAlly && !isPlayer && isHero) {
-                healAmount = b.InflictedDamage * hokInstance.enemyAIHeroLifeLeechPercent;
+            else if (hokInstance.enemyAIHeroLifeLeechPercent > 0f && !isAlly && !isPlayer && isHero) {
+                healAmount = inflictedDamage * hokInstance.enemyAIHeroLifeLeechPercent;
                 logging = hokInstance.logHeroHealingToChat;
             }
             // Ally Troop lifesteal
-            else if (hokInstance.friendlyAITroopLifeLeechPercent > 0.00f && !isHero && isAlly) {
-                healAmount = b.InflictedDamage * hokInstance.friendlyAITroopLifeLeechPercent;
+            else if (hokInstance.friendlyAITroopLifeLeechPercent > 0f && !isHero && isAlly) {
+                healAmount = inflictedDamage * hokInstance.friendlyAITroopLifeLeechPercent;
                 logging = hokInstance.logTroopHealingToChat;
             }
             // Enemy Troop lifesteal
-            else if (hokInstance.enemyAITroopLifeLeechPercent > 0.00f && !isHero && !isAlly) {
-                healAmount = b.InflictedDamage * hokInstance.enemyAITroopLifeLeechPercent;
+            else if (hokInstance.enemyAITroopLifeLeechPercent > 0f && !isHero && !isAlly) {
+                healAmount = inflictedDamage * hokInstance.enemyAITroopLifeLeechPercent;
                 logging = hokInstance.logTroopHealingToChat;
             }
 
 
-            if (healAmount > 0.00f) {
+            // Heal ranged attacks based on the percentage set in MCM
+            if (hokInstance.allowRangedHealing && b.IsMissile) {
+                healAmount = healAmount * hokInstance.rangeHealAmount; 
+            }
+
+
+            if (healAmount > 0) {
 
                 int actualHealing = HealAgent(attacker, healAmount);
 
                 // Heal your horse or camel.
                 if (hokInstance.healHorsesToo && attacker.MountAgent != null) {
-                    HealAgent(attacker.MountAgent, healAmount);
+                    HealAgent(attacker.MountAgent, healAmount * hokInstance.mountHealAmount);
                 }
 
                 DoMedicineSkillup(attacker, healAmount);
 
                 if (logging && actualHealing > 0) {
-                    TextObject text = new TextObject("{=HOKMa0v4HCAT} {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
+                    TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
                     text.SetTextVariable("ATTACKER", attacker.Name);
                     text.SetTextVariable("AMOUNT", actualHealing.ToString());
                     text.SetTextVariable("VICTIM", victim.Name);
@@ -171,7 +187,7 @@ namespace HealOnKillUpdated {
 
 
         private int HealAgent(Agent a, float amount) {
-            amount = (amount < 1.00f ? 1.00f : amount);
+            amount = (amount < 1f ? 1f : amount);
             float health = a.Health;
             float maxHitPoints = a.HealthLimit;
             a.Health = a.Health + amount < maxHitPoints ? a.Health + amount : maxHitPoints;
