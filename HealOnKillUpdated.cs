@@ -38,6 +38,7 @@ namespace HealOnKillUpdated {
             }
 
             int  healAmount = 0;
+            float finalHealAmount = 0f;
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
             bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
@@ -75,20 +76,20 @@ namespace HealOnKillUpdated {
 
             // Heal ranged attacks based on the percentage set in MCM
             if (hokInstance.allowRangedHealing && killingBlow.IsMissile) {
-                healAmount = healAmount * (int)hokInstance.rangeHealAmount;
+                finalHealAmount = (float)healAmount * hokInstance.rangeHealAmount;
             }
 
 
-            if (healAmount > 0) {
+            if (finalHealAmount > 0f) {
 
-                int actualHealing = HealAgent(affectorAgent, healAmount);
+                int actualHealing = HealAgent(affectorAgent, finalHealAmount);
 
                 // Heal your horse or camel.
                 if (hokInstance.healHorsesToo && affectorAgent.MountAgent != null) {
-                    HealAgent(affectorAgent.MountAgent, (float)healAmount * hokInstance.mountHealAmount);
+                    HealAgent(affectorAgent.MountAgent, finalHealAmount * hokInstance.mountHealAmount);
                 }
 
-                DoMedicineSkillup(affectorAgent, (float)healAmount);
+                DoMedicineSkillup(affectorAgent, finalHealAmount);
 
                 if (logging && actualHealing > 0) {
                     TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");

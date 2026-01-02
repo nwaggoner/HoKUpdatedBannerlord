@@ -369,6 +369,7 @@ FodyWeavers.xsd
 WorkshopCreate.xml
 WorkshopUpdate.xml
 *.jpg
+*.png
 
 # Folders for debugging/building DLLs
 obj/
