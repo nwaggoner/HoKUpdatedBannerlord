@@ -3,6 +3,7 @@ using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base;
 using MCM.Abstractions.Base.Global;
 
+
 namespace HealOnKillUpdated {
     internal sealed class HoKUSettings : AttributeGlobalSettings<HoKUSettings> {
         
@@ -36,23 +37,23 @@ namespace HealOnKillUpdated {
 
 
 
-        [SettingPropertyFloatingInteger("{=HOKqrGwnJy3M}Player Life Leech", 0.00f, 1.00f, "#0%", HintText = "{=HOKt1UZbPrEb}Heals the player by percentage of damage of done.", Order = 1, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKqrGwnJy3M}Player Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKt1UZbPrEb}Heals the player by percentage of damage of done.", Order = 1, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float playerLifeLeechPercent { get; set; } = 0.15f;
 
-        [SettingPropertyFloatingInteger("{=HOKzqH9tLiTH}Friendly AI Hero Life Leech", 0.00f, 1.00f, "#0%", HintText = "{=HOKWbg0KQXmU}Heals friendly AI heroes (companions/family/friendly lords) by percentage of damage done.", Order = 2, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKzqH9tLiTH}Friendly AI Hero Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKWbg0KQXmU}Heals friendly AI heroes (companions/family/friendly lords) by percentage of damage done.", Order = 2, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float friendlyAIHeroLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyFloatingInteger("{=HOKlkkghJF1z}Enemy AI Hero Life Leech", 0.00f, 1.00f, "#0%", HintText = "{=HOKjmEYyVf0s}Heals enemy AI heroes (enemy lords) by percentage of damage done.", Order = 3, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKlkkghJF1z}Enemy AI Hero Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKjmEYyVf0s}Heals enemy AI heroes (enemy lords) by percentage of damage done.", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float enemyAIHeroLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyFloatingInteger("{=HOKtxiCNy3zI}Friendly AI Troop Life Leech", 0.00f, 1.00f, "#0%", HintText = "{=HOKfqSNv6jN4}Heals friendly troops by percentage of damage done.", Order = 4, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKtxiCNy3zI}Friendly AI Troop Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKfqSNv6jN4}Heals friendly troops by percentage of damage done.", Order = 4, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float friendlyAITroopLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyFloatingInteger("{=HOKoBDhrhWb1}Enemy AI Troop Life Leech", 0.00f, 1.00f, "#0%", HintText = "{=HOKxDKdnJiEZ}Heals enemy troops by percentage of damage done.", Order = 5, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOKoBDhrhWb1}Enemy AI Troop Life Leech", 0.00f, 2.00f, "#0%", HintText = "{=HOKxDKdnJiEZ}Heals enemy troops by percentage of damage done.", Order = 5, RequireRestart = false)]
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float enemyAITroopLifeLeechPercent { get; set; } = 0.00f;
 
@@ -87,6 +88,7 @@ namespace HealOnKillUpdated {
         [SettingPropertyBool("{=HOKOhh5bNU0y}Enable Debug Mode", HintText = "{=HOKT35YqcIkF}Logs caught exceptions and such.", Order = 4, RequireRestart = false)]
         [SettingPropertyGroup("Debug", GroupOrder = 4)]
         public bool debugMessages { get; set; } = false;
+
 
 
         public bool UseStandardOptionScreen {

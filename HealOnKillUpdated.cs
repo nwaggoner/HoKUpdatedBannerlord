@@ -83,7 +83,7 @@ namespace HealOnKillUpdated {
                 DoMedicineSkillup(affectorAgent, healAmount);
 
                 if (logging && actualHealing > 0) {
-                    TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
+                    TextObject text = new TextObject("{=HOK5z9gzZlpT} {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
                     text.SetTextVariable("ATTACKER", affectorAgent.Name);
                     text.SetTextVariable("AMOUNT", actualHealing.ToString());
                     text.SetTextVariable("VICTIM", affectedAgent.Name.ToString());
@@ -159,7 +159,7 @@ namespace HealOnKillUpdated {
                 DoMedicineSkillup(attacker, healAmount);
 
                 if (logging && actualHealing > 0) {
-                    TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
+                    TextObject text = new TextObject("{=HOKMa0v4HCAT} {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
                     text.SetTextVariable("ATTACKER", attacker.Name);
                     text.SetTextVariable("AMOUNT", actualHealing.ToString());
                     text.SetTextVariable("VICTIM", victim.Name);

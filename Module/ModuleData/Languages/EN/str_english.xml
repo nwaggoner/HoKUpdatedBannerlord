@@ -37,7 +37,7 @@
 		<string id="HOKOhh5bNU0y" text="Enable Debug Mode" />
 		<string id="HOKT35YqcIkF" text="Logs caught exceptions and such." />
 		<string id="HOKqvBf5KFso" text="0 Health" />
-		<string id="HOK5z9gzZlpT" text="[HoK] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}" />
-		<string id="HOKMa0v4HCAT" text="[HoK] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}." />
+		<string id="HOK5z9gzZlpT" text="[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}" />
+		<string id="HOKMa0v4HCAT" text="[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}." />
     </strings>
 </base>
