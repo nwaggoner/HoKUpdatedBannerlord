@@ -1,17 +1,20 @@
-﻿using System;
-using TaleWorlds.Core;
-using TaleWorlds.Library;
-using TaleWorlds.MountAndBlade;
-using TaleWorlds.CampaignSystem;
-using System.Linq;
-using TaleWorlds.ObjectSystem;
-using TaleWorlds.Engine;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
+using TaleWorlds.Engine;
+using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.MountAndBlade;
+using TaleWorlds.ObjectSystem;
 
 namespace HealOnKillUpdated {
+
     public class HealOnKillMissionBehavior : MissionLogic {
-        
+
         private readonly List<CharacterObject> _characterCache;
         private readonly List<MBGUID> _nullCharacterCache;
 
@@ -37,7 +40,7 @@ namespace HealOnKillUpdated {
                 return;
             }
 
-            int  healAmount = 0;
+            int healAmount = 0;
             float finalHealAmount = 0f;
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
@@ -114,7 +117,7 @@ namespace HealOnKillUpdated {
             }
             // Object references (avoids crash if a condition is checked out of order (or something strange).
             if (attacker.Team == null || collisionData.AttackBlockedWithShield || b.SelfInflictedDamage > 0 || !attacker.IsEnemyOf(victim) || victim.IsMount || b.InflictedDamage <= 0) {
-                return; 
+                return;
             }
             // Check whether ranged healing is allowed and return if it is not and the weapon used is a missle.
             if (!HoKUSettings.Instance.allowRangedHealing && b.IsMissile) {
@@ -130,7 +133,7 @@ namespace HealOnKillUpdated {
 
 
             HoKUSettings hokInstance = HoKUSettings.Instance;
-           
+
             // Player lifesteal
             if (hokInstance.playerLifeLeechPercent > 0f && isPlayer) {
                 healAmount = inflictedDamage * hokInstance.playerLifeLeechPercent;
@@ -160,7 +163,7 @@ namespace HealOnKillUpdated {
 
             // Heal ranged attacks based on the percentage set in MCM
             if (hokInstance.allowRangedHealing && b.IsMissile) {
-                healAmount = healAmount * hokInstance.rangeHealAmount; 
+                healAmount = healAmount * hokInstance.rangeHealAmount;
             }
 
 
@@ -188,7 +191,7 @@ namespace HealOnKillUpdated {
 
 
         private int HealAgent(Agent a, float amount) {
-            amount = (amount < 1f ? 1f : amount);
+            amount = (amount < (float)HoKUSettings.Instance.minHealing ? (float)HoKUSettings.Instance.minHealing : amount);
             float health = a.Health;
             float maxHitPoints = a.HealthLimit;
             a.Health = a.Health + amount < maxHitPoints ? a.Health + amount : maxHitPoints;
@@ -197,11 +200,14 @@ namespace HealOnKillUpdated {
 
 
         private void DoMedicineSkillup(Agent a, float amount) {
-            if (HoKUSettings.Instance.enableMedicineSkillGain && a.Character != null) {
+
+            HoKUSettings hokInstance = HoKUSettings.Instance;
+
+            if (hokInstance.enableMedicineSkillGain && a.Character != null) {
                 if (a.IsHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
                     if (character != null) {
-                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount);
+                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount * hokInstance.medicineXPAmount);
                     }
                 }
                 else {
@@ -210,7 +216,7 @@ namespace HealOnKillUpdated {
                         CharacterObject character = LookupCharacter(general.Character.Id);
                         if (character != null) {
                             float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
-                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount / manCountReduction);
+                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction) * hokInstance.medicineXPAmount);
                         }
                     }
                 }
@@ -237,3 +243,4 @@ namespace HealOnKillUpdated {
         }
     }
 }
+

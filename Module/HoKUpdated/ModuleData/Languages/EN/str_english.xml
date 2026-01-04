@@ -23,6 +23,8 @@
 		<string id="HOKtxiCNy3zI" text="Friendly AI Troop Life Leech" />
 		<string id="HOKfqSNv6jN4" text="Heals friendly troops by percentage of damage done." />
 		<string id="HOKoBDhrhWb1" text="Enemy AI Troop Life Leech" />
+		<string id="HOKLHZ5h4wt0" text="Minimum Heal" />
+		<string id="HOKZaBFyKiQZ" text="The minimum amount you can healed with life leech (default is 1)." />
 		<string id="HOKxDKdnJiEZ" text="Heals enemy troops by percentage of damage done." />
 		<string id="HOKxaE9F7AUy" text="Allow Horse Healing" />
 		<string id="HOKgABdvxkl0" text="For mounted troops (and you) all healing done is also applied to the mount." />
@@ -37,11 +39,16 @@
 		<string id="HOKxe6PdaTxL" text="Log Troop Healing to Chat" />
 		<string id="HOKr4xGiDQeC" text="(Warning: this is just for debugging, don't enable this unless you like spam.)" />
 		<string id="HOKHvyPZeDlG" text="Enable Medicine Skill Gain" />
+		<string id="HOK9VBkMzG3f" text="Medicine Skill Multiplier" />
+		<string id="HOKQEuU23FDS" text="Control how much medicine skill you gain (default is 100%)." />
 		<string id="HOKJnU6UxTaU" text="Give medicine skill for healing." />
 		<string id="HOKOhh5bNU0y" text="Enable Debug Mode" />
 		<string id="HOKT35YqcIkF" text="Logs caught exceptions and such." />
 		<string id="HOKqvBf5KFso" text="0 Health" />
 		<string id="HOK5z9gzZlpT" text="[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}" />
 		<string id="HOKMa0v4HCAT" text="[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}." />
+		<string id="HOKht6OXHM05" text="Default" />
+		<string id="HOKY5yyFyqPP" text="Ol' Reliable" />
+		<string id="HOKSAwLhUcvV" text="Longer Battles" />
     </strings>
 </base>
