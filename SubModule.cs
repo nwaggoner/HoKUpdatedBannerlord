@@ -17,11 +17,5 @@ namespace HealOnKillUpdated {
             mission.AddMissionBehavior(new HealOnKillMissionBehavior());
         }
 
-        protected override void OnSubModuleLoad() {
-            base.OnSubModuleLoad();
-            Harmony harmony = new Harmony("com.heal_on_kill");
-            harmony.PatchAll();
-        }
-
     }
 }
