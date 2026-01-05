@@ -9,6 +9,7 @@ using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.MountAndBlade.GauntletUI.Widgets.Mission;
 using TaleWorlds.ObjectSystem;
 
 namespace HealOnKillUpdated {
@@ -40,15 +41,21 @@ namespace HealOnKillUpdated {
                 return;
             }
 
-            int healAmount = 0;
-            float finalHealAmount = 0f;
+            HoKUSettings hokInstance = HoKUSettings.Instance;
+
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
             bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
             bool logging = false;
 
+            
+            float min_heal = (float)hokInstance.minHealing;
+            float finalHealAmount;
 
-            HoKUSettings hokInstance = HoKUSettings.Instance;
+            int healAmount = 0;
+            int actualHealing;
+
+            
 
             // Player heal
             if (hokInstance.playerHealing > 0 && isPlayer) {
@@ -77,22 +84,25 @@ namespace HealOnKillUpdated {
             }
 
 
-            // Heal ranged attacks based on the percentage set in MCM
-            if (hokInstance.allowRangedHealing && killingBlow.IsMissile) {
-                finalHealAmount = (float)healAmount * hokInstance.rangeHealAmount;
-            }
+            if (healAmount > 0) {
 
+                finalHealAmount = (float)healAmount;
 
-            if (finalHealAmount > 0f) {
+                // Heal ranged attacks based on the percentage set in MCM
+                if (hokInstance.allowRangedHealing && killingBlow.IsMissile) {
+                    finalHealAmount = finalHealAmount * hokInstance.rangeHealAmount;
+                    min_heal = min_heal * hokInstance.rangeHealAmount;
 
-                int actualHealing = HealAgent(affectorAgent, finalHealAmount);
+                }
+                
+                actualHealing = HealAgent(affectorAgent, finalHealAmount, min_heal);
 
                 // Heal your horse or camel.
                 if (hokInstance.healHorsesToo && affectorAgent.MountAgent != null) {
-                    HealAgent(affectorAgent.MountAgent, finalHealAmount * hokInstance.mountHealAmount);
+                    HealAgent(affectorAgent.MountAgent, finalHealAmount * hokInstance.mountHealAmount, min_heal * hokInstance.mountHealAmount);
                 }
 
-                DoMedicineSkillup(affectorAgent, finalHealAmount);
+                DoMedicineSkillup(affectorAgent, finalHealAmount * hokInstance.medicineXPAmount);
 
                 if (logging && actualHealing > 0) {
                     TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
@@ -124,15 +134,19 @@ namespace HealOnKillUpdated {
                 return;
             }
 
-            float healAmount = 0f;
+            HoKUSettings hokInstance = HoKUSettings.Instance;
+
             bool isAlly = (attacker.Team.IsPlayerTeam || attacker.Team.IsPlayerAlly);
             bool isPlayer = (attacker.IsMainAgent || attacker.IsPlayerControlled);
             bool isHero = (attacker.Character != null && attacker.Character.IsHero);
             bool logging = false;
+
             float inflictedDamage = (float)b.InflictedDamage;
+            float min_heal = (float)hokInstance.minHealing;
+            float healAmount = 0f;
 
+            int actualHealing;
 
-            HoKUSettings hokInstance = HoKUSettings.Instance;
 
             // Player lifesteal
             if (hokInstance.playerLifeLeechPercent > 0f && isPlayer) {
@@ -161,22 +175,24 @@ namespace HealOnKillUpdated {
             }
 
 
-            // Heal ranged attacks based on the percentage set in MCM
-            if (hokInstance.allowRangedHealing && b.IsMissile) {
-                healAmount = healAmount * hokInstance.rangeHealAmount;
-            }
+            
+            if (healAmount > 0f) {
 
+                // Heal ranged attacks based on the percentage set in MCM
+                if (hokInstance.allowRangedHealing && b.IsMissile) {
+                    healAmount = healAmount * hokInstance.rangeHealAmount;
+                    min_heal = min_heal * hokInstance.rangeHealAmount;
 
-            if (healAmount > 0) {
-
-                int actualHealing = HealAgent(attacker, healAmount);
+                }
+                
+                actualHealing = HealAgent(attacker, healAmount, min_heal);
 
                 // Heal your horse or camel.
                 if (hokInstance.healHorsesToo && attacker.MountAgent != null) {
-                    HealAgent(attacker.MountAgent, healAmount * hokInstance.mountHealAmount);
+                    HealAgent(attacker.MountAgent, healAmount * hokInstance.mountHealAmount, min_heal * hokInstance.mountHealAmount);
                 }
 
-                DoMedicineSkillup(attacker, healAmount);
+                DoMedicineSkillup(attacker, healAmount * hokInstance.medicineXPAmount);
 
                 if (logging && actualHealing > 0) {
                     TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
@@ -186,15 +202,21 @@ namespace HealOnKillUpdated {
                     InformationManager.DisplayMessage(new InformationMessage(text.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Red));
                 }
             }
+
+            return;
         }
 
 
 
-        private int HealAgent(Agent a, float amount) {
-            amount = (amount < (float)HoKUSettings.Instance.minHealing ? (float)HoKUSettings.Instance.minHealing : amount);
+        private int HealAgent(Agent a, float amount, float min_heal) {
+            
+            float temp = (amount < min_heal ? min_heal : amount);
+            amount = (temp < 1f ? 1f : temp);
+            
             float health = a.Health;
             float maxHitPoints = a.HealthLimit;
             a.Health = a.Health + amount < maxHitPoints ? a.Health + amount : maxHitPoints;
+            
             return (int)(a.Health - health);
         }
 
@@ -207,7 +229,7 @@ namespace HealOnKillUpdated {
                 if (a.IsHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
                     if (character != null) {
-                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount * hokInstance.medicineXPAmount);
+                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount);
                     }
                 }
                 else {
@@ -216,7 +238,7 @@ namespace HealOnKillUpdated {
                         CharacterObject character = LookupCharacter(general.Character.Id);
                         if (character != null) {
                             float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
-                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction) * hokInstance.medicineXPAmount);
+                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction));
                         }
                     }
                 }

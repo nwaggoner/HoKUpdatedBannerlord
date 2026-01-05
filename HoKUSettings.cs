@@ -62,35 +62,37 @@ namespace HealOnKillUpdated {
         [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
         public float enemyAITroopLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyInteger("{=HOKLHZ5h4wt0}Minimum Heal", 1, 100, HintText = "{=HOKZaBFyKiQZ}The minimum amount you can healed with life leech (default is 1).", Order = 6, RequireRestart = false)]
-        [SettingPropertyGroup("Health per Strike", GroupOrder = 2)]
+
+
+        [SettingPropertyInteger("{=HOKLHZ5h4wt0}Minimum Heal", 1, 100, HintText = "{=HOKZaBFyKiQZ}The minimum amount that someone can be healed per strike or per kill (default is 1).", Order = 1, RequireRestart = false)]
+        [SettingPropertyGroup("Misc.", GroupOrder = 2)]
         public int minHealing { get; set; } = 1;
 
-
-
-        [SettingPropertyBool("{=HOKxaE9F7AUy}Allow Horse Healing", HintText = "{=HOKgABdvxkl0}For mounted troops (and you) all healing done is also applied to the mount.", Order = 1, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKxaE9F7AUy}Allow Horse Healing", HintText = "{=HOKgABdvxkl0}For mounted troops (and you) all healing done is also applied to the mount.", Order = 2, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool healHorsesToo { get; set; } = true;
 
-        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Horse Healing Multiplier", 0f, 2f, "#0%", HintText = "{=HOKBtzD2leY7}Control how much healing your mount gets (default is 100%).", Order = 2, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Horse Healing Multiplier", 0f, 2f, "#0%", HintText = "{=HOKBtzD2leY7}Control how much healing your mount gets (default is 100%).", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float mountHealAmount { get; set; } = 1.00f;
 
-        [SettingPropertyBool("{=HOKNjCLqQi5A}Allow Ranged Healing", HintText = "{=HOKWw2fllAec}Allow healing on ranged damage", Order = 3, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKNjCLqQi5A}Allow Ranged Healing", HintText = "{=HOKWw2fllAec}Allow healing on ranged damage", Order = 4, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool allowRangedHealing { get; set; } = true;
 
-        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Ranged Healing Multiplier", 0f, 1f, "#0%", HintText = "{=HOKeohKUFxa3}Control how much healing ranged attacks get (default is 100%).", Order = 4, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Ranged Healing Multiplier", 0f, 1f, "#0%", HintText = "{=HOKeohKUFxa3}Control how much healing ranged attacks get (default is 100%).", Order = 5, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float rangeHealAmount { get; set; } = 1.00f;
 
-        [SettingPropertyBool("{=HOKHvyPZeDlG}Enable Medicine Skill Gain", HintText = "{=HOKJnU6UxTaU}Give medicine skill for healing.", Order = 5, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKHvyPZeDlG}Enable Medicine Skill Gain", HintText = "{=HOKJnU6UxTaU}Give medicine skill for healing.", Order = 6, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool enableMedicineSkillGain { get; set; } = false;
 
-        [SettingPropertyFloatingInteger("{=HOK9VBkMzG3f}Medicine Skill Multiplier", 1f, 10f, "#0%", HintText = "{=HOKQEuU23FDS}Control how much medicine skill you gain (default is 100%).", Order = 6, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK9VBkMzG3f}Medicine Skill Multiplier", 1f, 10f, "#0%", HintText = "{=HOKQEuU23FDS}Control how much medicine skill you gain (default is 100%).", Order = 7, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float medicineXPAmount { get; set; } = 1.00f;
+
+
 
         [SettingPropertyBool("{=HOKMuUyjaika}Log Player Healing to Chat", HintText = "", Order = 1, RequireRestart = false)]
         [SettingPropertyGroup("Debug", GroupOrder = 4)]
@@ -103,10 +105,6 @@ namespace HealOnKillUpdated {
         [SettingPropertyBool("{=HOKxe6PdaTxL}Log Troop Healing to Chat", HintText = "{=HOKr4xGiDQeC}(Warning: this is just for debugging, don't enable this unless you like spam.)", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Debug", GroupOrder = 4)]
         public bool logTroopHealingToChat { get; set; } = false;
-
-        [SettingPropertyBool("{=HOKOhh5bNU0y}Enable Debug Mode", HintText = "{=HOKT35YqcIkF}Logs caught exceptions and such.", Order = 4, RequireRestart = false)]
-        [SettingPropertyGroup("Debug", GroupOrder = 4)]
-        public bool debugMessages { get; set; } = false;
 
 
 
@@ -134,8 +132,7 @@ namespace HealOnKillUpdated {
                 medicineXPAmount = 1f,
                 logPlayerHealingToChat = false,
                 logHeroHealingToChat = false,
-                logTroopHealingToChat = false,
-                debugMessages = false
+                logTroopHealingToChat = false
             }));
             
             yield return (ISettingsPreset)new MemorySettingsPreset(((BaseSettings)this).Id, "longer_battles", new TextObject("{=HOKSAwLhUcvV}Longer Battles", (Dictionary<string, object>)null).ToString(), (Func<BaseSettings>)(() => (BaseSettings)new HoKUSettings() {
@@ -144,22 +141,21 @@ namespace HealOnKillUpdated {
                 enemyAIHeroHealing = 0,
                 friendlyAITroopHealing = 0,
                 enemyAITroopHealing = 0,
-                playerLifeLeechPercent = 0.6f,
-                friendlyAIHeroLifeLeechPercent = 1f,
-                enemyAIHeroLifeLeechPercent = 1f,
-                friendlyAITroopLifeLeechPercent = 1f,
-                enemyAITroopLifeLeechPercent = 1f,
-                minHealing = 1,
+                playerLifeLeechPercent = 0.33f,
+                friendlyAIHeroLifeLeechPercent = 0.5f,
+                enemyAIHeroLifeLeechPercent = 0.5f,
+                friendlyAITroopLifeLeechPercent = 0.33f,
+                enemyAITroopLifeLeechPercent = 0.33f,
+                minHealing = 15,
                 healHorsesToo = true,
-                mountHealAmount = 0.75f,
+                mountHealAmount = 0.5f,
                 allowRangedHealing = true,
-                rangeHealAmount = 1f,
+                rangeHealAmount = 0.5f,
                 enableMedicineSkillGain = true,
                 medicineXPAmount = 1f,
                 logPlayerHealingToChat = false,
                 logHeroHealingToChat = false,
-                logTroopHealingToChat = false,
-                debugMessages = false
+                logTroopHealingToChat = false
             }));
         }
 
