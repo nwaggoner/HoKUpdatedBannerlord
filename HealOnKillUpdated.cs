@@ -18,12 +18,14 @@ namespace HealOnKillUpdated {
 
         private readonly List<CharacterObject> _characterCache;
         private readonly List<MBGUID> _nullCharacterCache;
+        private HoKUSettings hokInstance;
 
         public HealOnKillMissionBehavior() {
             _characterCache = new List<CharacterObject>();
             _nullCharacterCache = new List<MBGUID>();
-        }
 
+            hokInstance = HoKUSettings.Instance;
+        }
 
         // For healing performed after killing another agent (flat amount).
         public override void OnAgentRemoved(Agent affectedAgent, Agent affectorAgent, AgentState agentState, KillingBlow killingBlow) {
@@ -37,15 +39,14 @@ namespace HealOnKillUpdated {
                 return;
             }
             // Check whether ranged healing is allowed and return if it is not and the weapon used is a missle.
-            if (!HoKUSettings.Instance.allowRangedHealing && killingBlow.IsMissile) {
+            if (!hokInstance.allowRangedHealing && killingBlow.IsMissile) {
                 return;
             }
-
-            HoKUSettings hokInstance = HoKUSettings.Instance;
 
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
             bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
+            bool getsXP = (!hokInstance.medicineXPPlayerOnly || (hokInstance.medicineXPPlayerOnly && isPlayer));
             bool logging = false;
 
             
@@ -102,7 +103,9 @@ namespace HealOnKillUpdated {
                     HealAgent(affectorAgent.MountAgent, finalHealAmount * hokInstance.mountHealAmount, min_heal * hokInstance.mountHealAmount);
                 }
 
-                DoMedicineSkillup(affectorAgent, finalHealAmount * hokInstance.medicineXPAmount);
+                if (hokInstance.enableMedicineSkillGain && getsXP) {
+                    DoMedicineSkillup(affectorAgent, finalHealAmount * hokInstance.medicineXPAmount);
+                }
 
                 if (logging && actualHealing > 0) {
                     TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
@@ -130,15 +133,15 @@ namespace HealOnKillUpdated {
                 return;
             }
             // Check whether ranged healing is allowed and return if it is not and the weapon used is a missle.
-            if (!HoKUSettings.Instance.allowRangedHealing && b.IsMissile) {
+            if (!hokInstance.allowRangedHealing && b.IsMissile) {
                 return;
             }
 
-            HoKUSettings hokInstance = HoKUSettings.Instance;
 
             bool isAlly = (attacker.Team.IsPlayerTeam || attacker.Team.IsPlayerAlly);
             bool isPlayer = (attacker.IsMainAgent || attacker.IsPlayerControlled);
             bool isHero = (attacker.Character != null && attacker.Character.IsHero);
+            bool getsXP = (!hokInstance.medicineXPPlayerOnly || (hokInstance.medicineXPPlayerOnly && isPlayer));
             bool logging = false;
 
             float inflictedDamage = (float)b.InflictedDamage;
@@ -175,7 +178,6 @@ namespace HealOnKillUpdated {
             }
 
 
-            
             if (healAmount > 0f) {
 
                 // Heal ranged attacks based on the percentage set in MCM
@@ -192,7 +194,11 @@ namespace HealOnKillUpdated {
                     HealAgent(attacker.MountAgent, healAmount * hokInstance.mountHealAmount, min_heal * hokInstance.mountHealAmount);
                 }
 
-                DoMedicineSkillup(attacker, healAmount * hokInstance.medicineXPAmount);
+
+                if (hokInstance.enableMedicineSkillGain && getsXP) {
+                    DoMedicineSkillup(attacker, healAmount * hokInstance.medicineXPAmount);
+                }
+
 
                 if (logging && actualHealing > 0) {
                     TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
@@ -221,11 +227,10 @@ namespace HealOnKillUpdated {
         }
 
 
+
         private void DoMedicineSkillup(Agent a, float amount) {
 
-            HoKUSettings hokInstance = HoKUSettings.Instance;
-
-            if (hokInstance.enableMedicineSkillGain && a.Character != null) {
+            if (a.Character != null) {
                 if (a.IsHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
                     if (character != null) {
@@ -244,6 +249,8 @@ namespace HealOnKillUpdated {
                 }
             }
         }
+
+
 
         private CharacterObject LookupCharacter(MBGUID id) {
             if (_nullCharacterCache.Contains(id)) {

@@ -88,7 +88,11 @@ namespace HealOnKillUpdated {
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool enableMedicineSkillGain { get; set; } = false;
 
-        [SettingPropertyFloatingInteger("{=HOK9VBkMzG3f}Medicine Skill Multiplier", 1f, 10f, "#0%", HintText = "{=HOKQEuU23FDS}Control how much medicine skill you gain (default is 100%).", Order = 7, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKUVNUH20Hc}Medicine Skill for Player Only", HintText = "{=HOKjp5qUqQ1N}Limits the ability to gain medicine skill to the player character only (instead of all NPC heroes).", Order = 7, RequireRestart = false)]
+        [SettingPropertyGroup("Misc.", GroupOrder = 3)]
+        public bool medicineXPPlayerOnly { get; set; } = false;
+
+        [SettingPropertyFloatingInteger("{=HOK9VBkMzG3f}Medicine Skill Multiplier", 1f, 10f, "#0%", HintText = "{=HOKQEuU23FDS}Control how much medicine skill you gain (default is 100%).", Order = 8, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float medicineXPAmount { get; set; } = 1.00f;
 
@@ -129,6 +133,7 @@ namespace HealOnKillUpdated {
                 allowRangedHealing = true,
                 rangeHealAmount = 1f,
                 enableMedicineSkillGain = true,
+                medicineXPPlayerOnly = false,
                 medicineXPAmount = 1f,
                 logPlayerHealingToChat = false,
                 logHeroHealingToChat = false,
@@ -146,12 +151,13 @@ namespace HealOnKillUpdated {
                 enemyAIHeroLifeLeechPercent = 0.5f,
                 friendlyAITroopLifeLeechPercent = 0.33f,
                 enemyAITroopLifeLeechPercent = 0.33f,
-                minHealing = 15,
+                minHealing = 12,
                 healHorsesToo = true,
                 mountHealAmount = 0.5f,
                 allowRangedHealing = true,
-                rangeHealAmount = 0.5f,
+                rangeHealAmount = 0.33f,
                 enableMedicineSkillGain = true,
+                medicineXPPlayerOnly = true,
                 medicineXPAmount = 1f,
                 logPlayerHealingToChat = false,
                 logHeroHealingToChat = false,
