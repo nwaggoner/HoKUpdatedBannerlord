@@ -30,6 +30,7 @@ namespace HealOnKillUpdated {
         // For healing performed after killing another agent (flat amount).
         public override void OnAgentRemoved(Agent affectedAgent, Agent affectorAgent, AgentState agentState, KillingBlow killingBlow) {
             /* ---- Base cases ---- */
+            
             // Base objects
             if (affectedAgent == null || affectorAgent == null) {
                 return;
@@ -42,6 +43,7 @@ namespace HealOnKillUpdated {
             if (!hokInstance.allowRangedHealing && killingBlow.IsMissile) {
                 return;
             }
+
 
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
@@ -56,7 +58,6 @@ namespace HealOnKillUpdated {
             int healAmount = 0;
             int actualHealing;
 
-            
 
             // Player heal
             if (hokInstance.playerHealing > 0 && isPlayer) {
@@ -74,12 +75,12 @@ namespace HealOnKillUpdated {
                 logging = hokInstance.logHeroHealingToChat;
             }
             // Ally Troop heal
-            else if (hokInstance.friendlyAITroopHealing > 0 && !isHero && isAlly) {
+            else if (hokInstance.friendlyAITroopHealing > 0 && !isHero && isAlly && !isPlayer) {
                 healAmount = hokInstance.friendlyAITroopHealing;
                 logging = hokInstance.logTroopHealingToChat;
             }
             // Enemy Troop heal
-            else if (hokInstance.enemyAITroopHealing > 0 && !isHero && !isAlly) {
+            else if (hokInstance.enemyAITroopHealing > 0 && !isHero && !isAlly && !isPlayer) {
                 healAmount = hokInstance.enemyAITroopHealing;
                 logging = hokInstance.logTroopHealingToChat;
             }
@@ -116,14 +117,15 @@ namespace HealOnKillUpdated {
                 }
             }
 
-
             return;
         }
+
 
 
         // For healing performed per strike (percentage of damage dealt).
         public override void OnRegisterBlow(Agent attacker, Agent victim, WeakGameEntity realHitEntity, Blow b, ref AttackCollisionData collisionData, in MissionWeapon attackerWeapon) {
             /* ---- Base cases ---- */
+            
             // Base objects
             if (attacker == null || victim == null) {
                 return;
@@ -136,7 +138,7 @@ namespace HealOnKillUpdated {
             if (!hokInstance.allowRangedHealing && b.IsMissile) {
                 return;
             }
-
+            
 
             bool isAlly = (attacker.Team.IsPlayerTeam || attacker.Team.IsPlayerAlly);
             bool isPlayer = (attacker.IsMainAgent || attacker.IsPlayerControlled);
@@ -147,7 +149,7 @@ namespace HealOnKillUpdated {
             float inflictedDamage = (float)b.InflictedDamage;
             float min_heal = (float)hokInstance.minHealing;
             float healAmount = 0f;
-
+             
             int actualHealing;
 
 
@@ -167,12 +169,12 @@ namespace HealOnKillUpdated {
                 logging = hokInstance.logHeroHealingToChat;
             }
             // Ally Troop lifesteal
-            else if (hokInstance.friendlyAITroopLifeLeechPercent > 0f && !isHero && isAlly) {
+            else if (hokInstance.friendlyAITroopLifeLeechPercent > 0f && !isHero && isAlly && !isPlayer) {
                 healAmount = inflictedDamage * hokInstance.friendlyAITroopLifeLeechPercent;
                 logging = hokInstance.logTroopHealingToChat;
             }
             // Enemy Troop lifesteal
-            else if (hokInstance.enemyAITroopLifeLeechPercent > 0f && !isHero && !isAlly) {
+            else if (hokInstance.enemyAITroopLifeLeechPercent > 0f && !isHero && !isAlly && !isPlayer) {
                 healAmount = inflictedDamage * hokInstance.enemyAITroopLifeLeechPercent;
                 logging = hokInstance.logTroopHealingToChat;
             }

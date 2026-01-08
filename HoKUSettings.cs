@@ -15,7 +15,7 @@ namespace HealOnKillUpdated {
         private bool _useStandardOptionScreen = false;
 
         public override string Id => "HoKUpdated_v1";
-        public override string DisplayName => "Heal on Kill Updated 1.3.13";
+        public override string DisplayName => "Heal on Kill Updated";
         public override string FolderName => "HoKUpdated";
         public override string FormatType => "json2";
 
@@ -146,12 +146,12 @@ namespace HealOnKillUpdated {
                 enemyAIHeroHealing = 0,
                 friendlyAITroopHealing = 0,
                 enemyAITroopHealing = 0,
-                playerLifeLeechPercent = 0.33f,
-                friendlyAIHeroLifeLeechPercent = 0.5f,
-                enemyAIHeroLifeLeechPercent = 0.5f,
-                friendlyAITroopLifeLeechPercent = 0.33f,
-                enemyAITroopLifeLeechPercent = 0.33f,
-                minHealing = 12,
+                playerLifeLeechPercent = 0.2f,
+                friendlyAIHeroLifeLeechPercent = 0.4f,
+                enemyAIHeroLifeLeechPercent = 0.4f,
+                friendlyAITroopLifeLeechPercent = 0.20f,
+                enemyAITroopLifeLeechPercent = 0.20f,
+                minHealing = 6,
                 healHorsesToo = true,
                 mountHealAmount = 0.5f,
                 allowRangedHealing = true,
