@@ -40,8 +40,8 @@ namespace HealOnKillUpdated {
         [SettingPropertyGroup("Heal on Kill", GroupOrder = 1)]
         public int enemyAITroopHealing { get; set; } = 0;
 
-        [SettingPropertyInteger("{=HOKLHZ5h4wt0}Minimum Heal", 1, 100, HintText = "{=HOKZaBFyKiQZ}The minimum amount that someone can be healed per kill (default is 1).", Order = 1, RequireRestart = false)]
-        [SettingPropertyGroup("Heal on Kill", GroupOrder = 2)]
+        [SettingPropertyInteger("{=HOKLHZ5h4wt0}Minimum Heal", 1, 100, HintText = "{=HOKZaBFyKiQZ}The minimum amount that someone can be healed per kill (default is 1).", Order = 6, RequireRestart = false)]
+        [SettingPropertyGroup("Heal on Kill", GroupOrder = 1)]
         public int minHealOnKill { get; set; } = 1;
 
 
@@ -66,7 +66,7 @@ namespace HealOnKillUpdated {
         [SettingPropertyGroup("Health on Strike", GroupOrder = 2)]
         public float enemyAITroopLifeLeechPercent { get; set; } = 0.00f;
 
-        [SettingPropertyInteger("{=HOKLHZ5h4wt0}Minimum Heal", 1, 100, HintText = "{=HOKQqz8yHgZJ}The minimum amount that someone can be healed per strike (default is 1).", Order = 1, RequireRestart = false)]
+        [SettingPropertyInteger("{=HOKLHZ5h4wt0}Minimum Heal", 1, 100, HintText = "{=HOKQqz8yHgZJ}The minimum amount that someone can be healed per strike (default is 1).", Order = 6, RequireRestart = false)]
         [SettingPropertyGroup("Health on Strike", GroupOrder = 2)]
         public int minHealLifeLeech { get; set; } = 1;
 
