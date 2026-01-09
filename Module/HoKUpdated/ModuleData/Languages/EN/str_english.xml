@@ -24,7 +24,8 @@
 		<string id="HOKfqSNv6jN4" text="Heals friendly troops by percentage of damage done." />
 		<string id="HOKoBDhrhWb1" text="Enemy AI Troop Life Leech" />
 		<string id="HOKLHZ5h4wt0" text="Minimum Heal" />
-		<string id="HOKZaBFyKiQZ" text="The minimum amount that someone can be healed per strike or per kill (default is 1)." />
+		<string id="HOKZaBFyKiQZ" text="The minimum amount that someone can be healed per kill (default is 1)." />
+		<string id="HOKQqz8yHgZJ" text="The minimum amount that someone can be healed per strike (default is 1)." />
 		<string id="HOKxDKdnJiEZ" text="Heals enemy troops by percentage of damage done." />
 		<string id="HOKxaE9F7AUy" text="Allow Horse Healing" />
 		<string id="HOKgABdvxkl0" text="For mounted troops (and you) all healing done is also applied to the mount." />

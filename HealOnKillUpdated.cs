@@ -52,7 +52,7 @@ namespace HealOnKillUpdated {
             bool logging = false;
 
             
-            float min_heal = (float)hokInstance.minHealing;
+            float min_heal = (float)hokInstance.minHealOnKill;
             float finalHealAmount;
 
             int healAmount = 0;
@@ -147,7 +147,7 @@ namespace HealOnKillUpdated {
             bool logging = false;
 
             float inflictedDamage = (float)b.InflictedDamage;
-            float min_heal = (float)hokInstance.minHealing;
+            float min_heal = (float)hokInstance.minHealLifeLeech;
             float healAmount = 0f;
              
             int actualHealing;
