@@ -72,31 +72,31 @@ namespace HealOnKillUpdated {
 
 
 
-        [SettingPropertyBool("{=HOKxaE9F7AUy}Allow Horse Healing", HintText = "{=HOKgABdvxkl0}For mounted troops (and you) all healing done is also applied to the mount.", Order = 2, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKxaE9F7AUy}Allow Horse Healing", HintText = "{=HOKgABdvxkl0}For mounted troops (and you) all healing done is also applied to the mount.", Order = 1, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool healHorsesToo { get; set; } = true;
 
-        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Horse Healing Multiplier", 0f, 2f, "#0%", HintText = "{=HOKBtzD2leY7}Control how much healing your mount gets (default is 100%).", Order = 3, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Horse Healing Multiplier", 0f, 2f, "#0%", HintText = "{=HOKBtzD2leY7}Control how much healing your mount gets (default is 100%).", Order = 2, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float mountHealAmount { get; set; } = 1.00f;
 
-        [SettingPropertyBool("{=HOKNjCLqQi5A}Allow Ranged Healing", HintText = "{=HOKWw2fllAec}Allow healing on ranged damage", Order = 4, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKNjCLqQi5A}Allow Ranged Healing", HintText = "{=HOKWw2fllAec}Allow healing on ranged damage", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool allowRangedHealing { get; set; } = true;
 
-        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Ranged Healing Multiplier", 0f, 1f, "#0%", HintText = "{=HOKeohKUFxa3}Control how much healing ranged attacks get (default is 100%).", Order = 5, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK1by8uIITs}Ranged Healing Multiplier", 0f, 1f, "#0%", HintText = "{=HOKeohKUFxa3}Control how much healing ranged attacks get (default is 100%).", Order = 4, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float rangeHealAmount { get; set; } = 1.00f;
 
-        [SettingPropertyBool("{=HOKHvyPZeDlG}Enable Medicine Skill Gain", HintText = "{=HOKJnU6UxTaU}Give medicine skill for healing.", Order = 6, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKHvyPZeDlG}Enable Medicine Skill Gain", HintText = "{=HOKJnU6UxTaU}Give medicine skill for healing.", Order = 5, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool enableMedicineSkillGain { get; set; } = false;
 
-        [SettingPropertyBool("{=HOKUVNUH20Hc}Medicine Skill for Player Only", HintText = "{=HOKjp5qUqQ1N}Limits the ability to gain medicine skill to the player character only (instead of all NPC heroes).", Order = 7, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKUVNUH20Hc}Medicine Skill for Player Only", HintText = "{=HOKjp5qUqQ1N}Limits the ability to gain medicine skill to the player character only (instead of all NPC heroes).", Order = 6, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public bool medicineXPPlayerOnly { get; set; } = false;
 
-        [SettingPropertyFloatingInteger("{=HOK9VBkMzG3f}Medicine Skill Multiplier", 1f, 10f, "#0%", HintText = "{=HOKQEuU23FDS}Control how much medicine skill you gain (default is 100%).", Order = 8, RequireRestart = false)]
+        [SettingPropertyFloatingInteger("{=HOK9VBkMzG3f}Medicine Skill Multiplier", 1f, 10f, "#0%", HintText = "{=HOKQEuU23FDS}Control how much medicine skill you gain (default is 100%).", Order = 7, RequireRestart = false)]
         [SettingPropertyGroup("Misc.", GroupOrder = 3)]
         public float medicineXPAmount { get; set; } = 1.00f;
 
@@ -106,13 +106,23 @@ namespace HealOnKillUpdated {
         [SettingPropertyGroup("Debug", GroupOrder = 4)]
         public bool logPlayerHealingToChat { get; set; } = true;
 
-        [SettingPropertyBool("{=HOKBtXbn11mL}Log AI Hero Healing to Chat", HintText = "", Order = 2, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKfaxNnIOFf}Log Player XP Gain to Chat", HintText = "", Order = 2, RequireRestart = false)]
+        [SettingPropertyGroup("Debug", GroupOrder = 4)]
+        public bool logPlayerXPToChat { get; set; } = false;
+
+        [SettingPropertyBool("{=HOKBtXbn11mL}Log AI Hero Healing to Chat", HintText = "", Order = 3, RequireRestart = false)]
         [SettingPropertyGroup("Debug", GroupOrder = 4)]
         public bool logHeroHealingToChat { get; set; } = false;
 
-        [SettingPropertyBool("{=HOKxe6PdaTxL}Log Troop Healing to Chat", HintText = "{=HOKr4xGiDQeC}(Warning: this is just for debugging, don't enable this unless you like spam.)", Order = 3, RequireRestart = false)]
+        [SettingPropertyBool("{=HOKVYdsuVDv3}Log AI Hero XP Gain to Chat", HintText = "", Order = 4, RequireRestart = false)]
+        [SettingPropertyGroup("Debug", GroupOrder = 4)]
+        public bool logHeroXPToChat { get; set; } = false;
+
+        [SettingPropertyBool("{=HOKxe6PdaTxL}Log Troop Healing to Chat", HintText = "{=HOKr4xGiDQeC}(Warning: this is just for debugging, don't enable this unless you like spam.)", Order = 5, RequireRestart = false)]
         [SettingPropertyGroup("Debug", GroupOrder = 4)]
         public bool logTroopHealingToChat { get; set; } = false;
+
+       
 
 
 
@@ -141,7 +151,9 @@ namespace HealOnKillUpdated {
                 medicineXPPlayerOnly = false,
                 medicineXPAmount = 1f,
                 logPlayerHealingToChat = false,
+                logPlayerXPToChat = false,
                 logHeroHealingToChat = false,
+                logHeroXPToChat = false,
                 logTroopHealingToChat = false
             }));
 
@@ -166,7 +178,9 @@ namespace HealOnKillUpdated {
                 medicineXPPlayerOnly = true,
                 medicineXPAmount = 1f,
                 logPlayerHealingToChat = false,
+                logPlayerXPToChat = false,
                 logHeroHealingToChat = false,
+                logHeroXPToChat = false,    
                 logTroopHealingToChat = false
             }));
         }

@@ -48,9 +48,9 @@ namespace HealOnKillUpdated {
             bool isAlly = (affectorAgent.Team.IsPlayerTeam || affectorAgent.Team.IsPlayerAlly);
             bool isPlayer = (affectorAgent.IsMainAgent || affectorAgent.IsPlayerControlled);
             bool isHero = (affectorAgent.Character != null && affectorAgent.Character.IsHero);
-            bool getsXP = (!hokInstance.medicineXPPlayerOnly || (hokInstance.medicineXPPlayerOnly && isPlayer));
+            bool getsXP = (hokInstance.medicineXPPlayerOnly && (isPlayer || (isAlly && !isHero)));
             bool logging = false;
-
+            bool loggingXP = false;
             
             float min_heal = (float)hokInstance.minHealOnKill;
             float finalHealAmount;
@@ -63,26 +63,31 @@ namespace HealOnKillUpdated {
             if (hokInstance.playerHealing > 0 && isPlayer) {
                 healAmount = hokInstance.playerHealing;
                 logging = hokInstance.logPlayerHealingToChat;
+                loggingXP = hokInstance.logPlayerXPToChat;
             }
             // Ally Hero heal
             else if (hokInstance.friendlyAIHeroHealing > 0 && isAlly && !isPlayer && isHero) {
                 healAmount = hokInstance.friendlyAIHeroHealing;
                 logging = hokInstance.logHeroHealingToChat;
+                loggingXP = hokInstance.logHeroXPToChat;
             }
             // Enemy Hero heal
             else if (hokInstance.enemyAIHeroHealing > 0 && !isAlly && !isPlayer && isHero) {
                 healAmount = hokInstance.enemyAIHeroHealing;
                 logging = hokInstance.logHeroHealingToChat;
+                loggingXP = hokInstance.logHeroXPToChat;
             }
             // Ally Troop heal
             else if (hokInstance.friendlyAITroopHealing > 0 && !isHero && isAlly && !isPlayer) {
                 healAmount = hokInstance.friendlyAITroopHealing;
                 logging = hokInstance.logTroopHealingToChat;
+                loggingXP = (hokInstance.logPlayerXPToChat | hokInstance.logHeroXPToChat);
             }
             // Enemy Troop heal
             else if (hokInstance.enemyAITroopHealing > 0 && !isHero && !isAlly && !isPlayer) {
                 healAmount = hokInstance.enemyAITroopHealing;
                 logging = hokInstance.logTroopHealingToChat;
+                loggingXP = hokInstance.logHeroXPToChat;
             }
 
 
@@ -109,11 +114,28 @@ namespace HealOnKillUpdated {
                 }
 
                 if (logging && actualHealing > 0) {
-                    TextObject text = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
-                    text.SetTextVariable("ATTACKER", affectorAgent.Name);
-                    text.SetTextVariable("AMOUNT", actualHealing.ToString());
-                    text.SetTextVariable("VICTIM", affectedAgent.Name.ToString());
-                    InformationManager.DisplayMessage(new InformationMessage(text.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Red));
+                   
+                    TextObject textHeal = new TextObject("{=HOK5z9gzZlpT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from killing {VICTIM}.");
+                    textHeal.SetTextVariable("ATTACKER", affectorAgent.Name);
+                    textHeal.SetTextVariable("AMOUNT", actualHealing.ToString());
+                    textHeal.SetTextVariable("VICTIM", affectedAgent.Name.ToString());
+                    InformationManager.DisplayMessage(new InformationMessage(textHeal.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Red));
+
+                    if(hokInstance.enableMedicineSkillGain && getsXP && loggingXP) {
+
+                        int actualXP = (int)(finalHealAmount * hokInstance.medicineXPAmount);
+                        Agent general = affectorAgent.Team?.GeneralAgent;
+
+                        TextObject textXP = new TextObject("{=HOKplCWnkotD}[HoKU] {ATTACKER} gained {AMOUNT} Medical XP.");
+                        if(general != null)
+                            textXP.SetTextVariable("ATTACKER", isHero ? affectorAgent.Name.ToString() : general.Name.ToString());
+                        else
+                            textXP.SetTextVariable("ATTACKER", affectorAgent.Name.ToString());
+                        textXP.SetTextVariable("AMOUNT", actualXP.ToString());
+                        InformationManager.DisplayMessage(new InformationMessage(textXP.ToString(), isAlly ? Colors.Green : Colors.Magenta));
+
+                    }
+
                 }
             }
 
@@ -143,8 +165,9 @@ namespace HealOnKillUpdated {
             bool isAlly = (attacker.Team.IsPlayerTeam || attacker.Team.IsPlayerAlly);
             bool isPlayer = (attacker.IsMainAgent || attacker.IsPlayerControlled);
             bool isHero = (attacker.Character != null && attacker.Character.IsHero);
-            bool getsXP = (!hokInstance.medicineXPPlayerOnly || (hokInstance.medicineXPPlayerOnly && isPlayer));
+            bool getsXP = (hokInstance.medicineXPPlayerOnly && (isPlayer || (isAlly && !isHero)));
             bool logging = false;
+            bool loggingXP = false;
 
             float inflictedDamage = (float)b.InflictedDamage;
             float min_heal = (float)hokInstance.minHealLifeLeech;
@@ -157,27 +180,33 @@ namespace HealOnKillUpdated {
             if (hokInstance.playerLifeLeechPercent > 0f && isPlayer) {
                 healAmount = inflictedDamage * hokInstance.playerLifeLeechPercent;
                 logging = hokInstance.logPlayerHealingToChat;
+                loggingXP = hokInstance.logPlayerXPToChat;
             }
             // Ally Hero lifesteal
             else if (hokInstance.friendlyAIHeroLifeLeechPercent > 0f && isAlly && !isPlayer && isHero) {
                 healAmount = inflictedDamage * hokInstance.friendlyAIHeroLifeLeechPercent;
                 logging = hokInstance.logHeroHealingToChat;
+                loggingXP = hokInstance.logHeroXPToChat;
             }
             // Enemy Hero lifesteal  
             else if (hokInstance.enemyAIHeroLifeLeechPercent > 0f && !isAlly && !isPlayer && isHero) {
                 healAmount = inflictedDamage * hokInstance.enemyAIHeroLifeLeechPercent;
                 logging = hokInstance.logHeroHealingToChat;
+                loggingXP = hokInstance.logHeroXPToChat;
             }
             // Ally Troop lifesteal
             else if (hokInstance.friendlyAITroopLifeLeechPercent > 0f && !isHero && isAlly && !isPlayer) {
                 healAmount = inflictedDamage * hokInstance.friendlyAITroopLifeLeechPercent;
                 logging = hokInstance.logTroopHealingToChat;
+                loggingXP = (hokInstance.logPlayerXPToChat | hokInstance.logHeroXPToChat);
             }
             // Enemy Troop lifesteal
             else if (hokInstance.enemyAITroopLifeLeechPercent > 0f && !isHero && !isAlly && !isPlayer) {
                 healAmount = inflictedDamage * hokInstance.enemyAITroopLifeLeechPercent;
                 logging = hokInstance.logTroopHealingToChat;
+                loggingXP = hokInstance.logHeroXPToChat;
             }
+
 
 
             if (healAmount > 0f) {
@@ -203,11 +232,26 @@ namespace HealOnKillUpdated {
 
 
                 if (logging && actualHealing > 0) {
-                    TextObject text = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
-                    text.SetTextVariable("ATTACKER", attacker.Name);
-                    text.SetTextVariable("AMOUNT", actualHealing.ToString());
-                    text.SetTextVariable("VICTIM", victim.Name);
-                    InformationManager.DisplayMessage(new InformationMessage(text.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Red));
+
+                    TextObject textHeal = new TextObject("{=HOKMa0v4HCAT}[HoKU] {ATTACKER} was healed {AMOUNT} HP from attacking {VICTIM}.");
+                    textHeal.SetTextVariable("ATTACKER", attacker.Name);
+                    textHeal.SetTextVariable("AMOUNT", actualHealing.ToString());
+                    textHeal.SetTextVariable("VICTIM", victim.Name);
+                    InformationManager.DisplayMessage(new InformationMessage(textHeal.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Red));
+
+                    if (hokInstance.enableMedicineSkillGain && getsXP && loggingXP) {
+                        
+                        int actualXP = (int)(actualHealing * hokInstance.medicineXPAmount);
+                        Agent general = attacker.Team?.GeneralAgent;
+
+                        TextObject textXP = new TextObject("{=HOKplCWnkotD}[HoKU] {ATTACKER} gained {AMOUNT} Medical XP.");
+                        if (general != null)
+                            textXP.SetTextVariable("ATTACKER", isHero ? attacker.Name.ToString() : general.Name.ToString());
+                        else
+                            textXP.SetTextVariable("ATTACKER", attacker.Name.ToString());
+                        textXP.SetTextVariable("AMOUNT", actualXP.ToString());
+                        InformationManager.DisplayMessage(new InformationMessage(textXP.ToString(), isAlly ? Colors.Green : Colors.Magenta));
+                    }
                 }
             }
 
@@ -231,7 +275,7 @@ namespace HealOnKillUpdated {
 
 
         private void DoMedicineSkillup(Agent a, float amount) {
-
+            
             if (a.Character != null) {
                 if (a.IsHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
@@ -248,7 +292,7 @@ namespace HealOnKillUpdated {
                             character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction));
                         }
                     }
-                }
+                } 
             }
         }
 

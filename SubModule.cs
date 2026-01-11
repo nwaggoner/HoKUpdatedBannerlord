@@ -13,7 +13,6 @@ namespace HealOnKillUpdated {
                 return;
             }
             base.OnMissionBehaviorInitialize(mission);
-
             mission.AddMissionBehavior(new HealOnKillMissionBehavior());
         }
 
