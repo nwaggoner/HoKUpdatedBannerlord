@@ -57,7 +57,8 @@ namespace HealOnKillUpdated {
             float finalHealAmount;
 
             int healAmount = 0;
-            int actualHealing, actualXP = 0;
+            int actualHealing = 0, 
+                actualXP = 0;
 
 
             // Player heal
@@ -113,11 +114,11 @@ namespace HealOnKillUpdated {
 
                 if (hokInstance.enableMedicineSkillGain) {
                     if (!hokInstance.medicineXPPlayerOnly || playerGetsXP) {
-                        actualXP = (int)((float)actualHealing * hokInstance.medicineXPAmount);
-                        DoMedicineSkillup(affectorAgent, (float)actualHealing * hokInstance.medicineXPAmount;
+                        actualXP = DoMedicineSkillup(affectorAgent, (float)actualHealing * hokInstance.medicineXPAmount);
                     }
                 }
 
+                // Logging
                 if (actualHealing > 0) {
                     
                     if(logging) { 
@@ -130,16 +131,15 @@ namespace HealOnKillUpdated {
 
                     }
 
-                    if (actualXP > 0 && loggingXP) {
+                    if (loggingXP) {
 
-                        
                         Agent general = affectorAgent.Team?.GeneralAgent;
 
                         TextObject textXP = new TextObject("{=HOKplCWnkotD}[HoKU] {ATTACKER} gained {AMOUNT} Medical XP.");
                         if (general != null)
-                            textXP.SetTextVariable("ATTACKER", isHero ? affectorAgent.Name.ToString() : general.Name.ToString());
+                            textXP.SetTextVariable("ATTACKER", isHero ? affectorAgent.Name : general.Name);
                         else
-                            textXP.SetTextVariable("ATTACKER", affectorAgent.Name.ToString());
+                            textXP.SetTextVariable("ATTACKER", affectorAgent.Name);
                         textXP.SetTextVariable("AMOUNT", actualXP.ToString());
                         InformationManager.DisplayMessage(new InformationMessage(textXP.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Magenta));
 
@@ -183,7 +183,8 @@ namespace HealOnKillUpdated {
             float min_heal = (float)hokInstance.minHealLifeLeech;
             float healAmount = 0f;
              
-            int actualHealing, actualXP = 0;
+            int actualHealing = 0,
+                actualXP = 0;
 
 
             // Player lifesteal
@@ -238,12 +239,11 @@ namespace HealOnKillUpdated {
 
                 if (hokInstance.enableMedicineSkillGain) {
                     if (!hokInstance.medicineXPPlayerOnly || playerGetsXP) {
-                        actualXP = (int)(actualXP = (int)((float)actualHealing * hokInstance.medicineXPAmount));
-                        DoMedicineSkillup(attacker, (float)actualHealing * hokInstance.medicineXPAmount);
+                        actualXP = DoMedicineSkillup(attacker, (float)actualHealing * hokInstance.medicineXPAmount);
                     }
                 }
 
-
+                // Logging
                 if (actualHealing > 0) {
 
                     if (logging) {
@@ -255,15 +255,15 @@ namespace HealOnKillUpdated {
                         InformationManager.DisplayMessage(new InformationMessage(textHeal.ToString(), isAlly ? Colors.Green : Colors.Red));
                     }
 
-                    if (actualXP > 0 && loggingXP) {
+                    if (loggingXP) {
 
                         Agent general = attacker.Team?.GeneralAgent;
 
                         TextObject textXP = new TextObject("{=HOKplCWnkotD}[HoKU] {ATTACKER} gained {AMOUNT} Medical XP.");
                         if (general != null)
-                            textXP.SetTextVariable("ATTACKER", isHero ? attacker.Name.ToString() : general.Name.ToString());
+                            textXP.SetTextVariable("ATTACKER", isHero ? attacker.Name : general.Name);
                         else
-                            textXP.SetTextVariable("ATTACKER", attacker.Name.ToString());
+                            textXP.SetTextVariable("ATTACKER", attacker.Name);
                         textXP.SetTextVariable("AMOUNT", actualXP.ToString());
                         InformationManager.DisplayMessage(new InformationMessage(textXP.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Magenta));
                     }
@@ -289,7 +289,9 @@ namespace HealOnKillUpdated {
 
 
 
-        private void DoMedicineSkillup(Agent a, float amount) {
+        private int DoMedicineSkillup(Agent a, float amount) {
+
+            float actualAmount = amount;
             
             if (a.Character != null) {
                 if (a.IsHero) {
@@ -297,6 +299,7 @@ namespace HealOnKillUpdated {
                     if (character != null) {
                         character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount);
                     }
+
                 }
                 else {
                     Agent general = a.Team?.GeneralAgent;
@@ -305,10 +308,14 @@ namespace HealOnKillUpdated {
                         if (character != null) {
                             float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
                             character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction));
+                            actualAmount = amount / manCountReduction;
                         }
                     }
                 } 
             }
+
+            return (int)actualAmount;
+  
         }
 
 
