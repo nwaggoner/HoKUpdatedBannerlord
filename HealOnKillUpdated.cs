@@ -114,7 +114,7 @@ namespace HealOnKillUpdated {
 
                 if (hokInstance.enableMedicineSkillGain) {
                     if (!hokInstance.medicineXPPlayerOnly || playerGetsXP) {
-                        actualXP = DoMedicineSkillup(affectorAgent, (float)actualHealing * hokInstance.medicineXPAmount);
+                        actualXP = DoMedicineSkillup(affectorAgent, finalHealAmount * hokInstance.medicineXPAmount);
                     }
                 }
 
@@ -237,7 +237,7 @@ namespace HealOnKillUpdated {
 
                 if (hokInstance.enableMedicineSkillGain) {
                     if (!hokInstance.medicineXPPlayerOnly || playerGetsXP) {
-                        actualXP = DoMedicineSkillup(attacker, (float)actualHealing * hokInstance.medicineXPAmount);
+                        actualXP = DoMedicineSkillup(attacker, healAmount * hokInstance.medicineXPAmount);
                     }
                 }
 
@@ -289,13 +289,13 @@ namespace HealOnKillUpdated {
 
         private int DoMedicineSkillup(Agent a, float amount) {
 
-            int finalAmount = (int)(amount < 1f ? 1f : amount);
+            float finalAmount = (amount < 1f ? 1f : amount);
 
             if (a.Character != null) {
                 if (a.IsHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
                     if (character != null) {
-                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, amount);
+                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
                     }
 
                 }
@@ -305,14 +305,14 @@ namespace HealOnKillUpdated {
                         CharacterObject character = LookupCharacter(general.Character.Id);
                         if (character != null) {
                             float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
-                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction));
-                            finalAmount = (int)(amount / manCountReduction);
+                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (finalAmount / manCountReduction));
+                            finalAmount = finalAmount / manCountReduction;
                         }
                     }
                 } 
             }
 
-            return finalAmount;
+            return (int)finalAmount;
   
         }
 
