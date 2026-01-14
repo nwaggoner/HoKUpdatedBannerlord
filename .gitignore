@@ -373,4 +373,4 @@ WorkshopUpdate.xml
 
 # Folders for debugging/building DLLs
 obj/
-!/Modules/HoKUpdated/bin/
+!/Modules/HoKUpdated/bin/Win64_Shipping_Client/*.dll
