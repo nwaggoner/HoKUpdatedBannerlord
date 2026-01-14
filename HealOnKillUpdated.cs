@@ -131,7 +131,7 @@ namespace HealOnKillUpdated {
 
                     }
 
-                    if (loggingXP) {
+                    if (actualXP > 0 && loggingXP) {
 
                         Agent general = affectorAgent.Team?.GeneralAgent;
 
@@ -144,8 +144,6 @@ namespace HealOnKillUpdated {
                         InformationManager.DisplayMessage(new InformationMessage(textXP.ToString(), isAlly ? Color.FromUint(4282569842U) : Colors.Magenta));
 
                     }
-
-
                 }
             }
 
@@ -255,7 +253,7 @@ namespace HealOnKillUpdated {
                         InformationManager.DisplayMessage(new InformationMessage(textHeal.ToString(), isAlly ? Colors.Green : Colors.Red));
                     }
 
-                    if (loggingXP) {
+                    if (actualXP > 0 && loggingXP) {
 
                         Agent general = attacker.Team?.GeneralAgent;
 
@@ -291,8 +289,8 @@ namespace HealOnKillUpdated {
 
         private int DoMedicineSkillup(Agent a, float amount) {
 
-            float actualAmount = amount;
-            
+            int finalAmount = (int)(amount < 1f ? 1f : amount);
+
             if (a.Character != null) {
                 if (a.IsHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
@@ -308,13 +306,13 @@ namespace HealOnKillUpdated {
                         if (character != null) {
                             float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
                             character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (amount / manCountReduction));
-                            actualAmount = amount / manCountReduction;
+                            finalAmount = (int)(amount / manCountReduction);
                         }
                     }
                 } 
             }
 
-            return (int)actualAmount;
+            return finalAmount;
   
         }
 
