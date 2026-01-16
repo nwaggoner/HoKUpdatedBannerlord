@@ -114,7 +114,7 @@ namespace HealOnKillUpdated {
 
                 if (hokInstance.enableMedicineSkillGain) {
                     if (!hokInstance.medicineXPPlayerOnly || playerGetsXP) {
-                        actualXP = DoMedicineSkillup(affectorAgent, finalHealAmount * hokInstance.medicineXPAmount);
+                        actualXP = DoMedicineSkillup(affectorAgent, (float)actualHealing * hokInstance.medicineXPAmount);
                     }
                 }
 
@@ -133,11 +133,11 @@ namespace HealOnKillUpdated {
 
                     if (actualXP > 0 && loggingXP) {
 
-                        Agent general = affectorAgent.Team?.GeneralAgent;
+                        Agent leader = affectorAgent.Team?.Leader;
 
                         TextObject textXP = new TextObject("{=HOKplCWnkotD}[HoKU] {ATTACKER} gained {AMOUNT} Medical XP.");
-                        if (general != null)
-                            textXP.SetTextVariable("ATTACKER", isHero ? affectorAgent.Name : general.Name);
+                        if (leader != null)
+                            textXP.SetTextVariable("ATTACKER", isHero ? affectorAgent.Name : leader.Name);
                         else
                             textXP.SetTextVariable("ATTACKER", affectorAgent.Name);
                         textXP.SetTextVariable("AMOUNT", actualXP.ToString());
@@ -237,7 +237,7 @@ namespace HealOnKillUpdated {
 
                 if (hokInstance.enableMedicineSkillGain) {
                     if (!hokInstance.medicineXPPlayerOnly || playerGetsXP) {
-                        actualXP = DoMedicineSkillup(attacker, healAmount * hokInstance.medicineXPAmount);
+                        actualXP = DoMedicineSkillup(attacker, (float)actualHealing * hokInstance.medicineXPAmount);
                     }
                 }
 
@@ -255,11 +255,11 @@ namespace HealOnKillUpdated {
 
                     if (actualXP > 0 && loggingXP) {
 
-                        Agent general = attacker.Team?.GeneralAgent;
+                        Agent leader = attacker.Team?.Leader;
 
                         TextObject textXP = new TextObject("{=HOKplCWnkotD}[HoKU] {ATTACKER} gained {AMOUNT} Medical XP.");
-                        if (general != null)
-                            textXP.SetTextVariable("ATTACKER", isHero ? attacker.Name : general.Name);
+                        if (leader != null)
+                            textXP.SetTextVariable("ATTACKER", isHero ? attacker.Name : leader.Name);
                         else
                             textXP.SetTextVariable("ATTACKER", attacker.Name);
                         textXP.SetTextVariable("AMOUNT", actualXP.ToString());
@@ -290,30 +290,32 @@ namespace HealOnKillUpdated {
         private int DoMedicineSkillup(Agent a, float amount) {
 
             float finalAmount = (amount < 1f ? 1f : amount);
+            bool isHero = (a.Character != null && a.Character.IsHero);
 
-            if (a.Character != null) {
-                if (a.IsHero) {
+            if (isHero) {
                     CharacterObject character = LookupCharacter(a.Character.Id);
                     if (character != null) {
                         character.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
                     }
+            }    
+            else {
+                Agent leader = a.Team?.Leader;
+                if (leader?.Character != null) {
 
-                }
-                else {
-                    Agent general = a.Team?.GeneralAgent;
-                    if (general?.Character != null) {
-                        CharacterObject character = LookupCharacter(general.Character.Id);
-                        if (character != null) {
-                            float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
-                            character.HeroObject.AddSkillXp(DefaultSkills.Medicine, (finalAmount / manCountReduction));
-                            finalAmount = finalAmount / manCountReduction;
-                        }
+                    CharacterObject character = LookupCharacter(leader.Character.Id);
+
+                    if (character != null) {
+
+                        float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
+                        finalAmount /= manCountReduction;
+                        finalAmount = (finalAmount < 1f ? 1f : finalAmount);
+
+                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
                     }
-                } 
-            }
+                }
+            } 
 
             return (int)finalAmount;
-  
         }
 
 
