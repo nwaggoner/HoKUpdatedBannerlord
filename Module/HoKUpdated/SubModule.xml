@@ -1,7 +1,7 @@
 ﻿<Module>
   <Name value="Heal on Kill Updated"/>
   <Id value="HealOnKillUpdated"/>
-  <Version value="v1.1.0.6"/>
+  <Version value="v1.1.0.7"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <ModuleType value="Community" />

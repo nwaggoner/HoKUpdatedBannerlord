@@ -1,16 +1,12 @@
-﻿using HarmonyLib;
-using NavalDLC.Storyline;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
-using TaleWorlds.MountAndBlade.GauntletUI.Widgets.Mission;
 using TaleWorlds.ObjectSystem;
 
 namespace HealOnKillUpdated {
@@ -92,7 +88,7 @@ namespace HealOnKillUpdated {
                 loggingXP = hokInstance.logHeroXPToChat;
             }
 
-            loggingXP = (hokInstance.medicineXPPlayerOnly ? playerGetsXP : loggingXP);
+            loggingXP = (hokInstance.medicineXPPlayerOnly && hokInstance.logPlayerXPToChat ? playerGetsXP : loggingXP);
 
             if (healAmount > 0) {
 
@@ -216,7 +212,7 @@ namespace HealOnKillUpdated {
                 loggingXP = hokInstance.logHeroXPToChat;
             }
 
-            loggingXP = (hokInstance.medicineXPPlayerOnly ? playerGetsXP : loggingXP);
+            loggingXP = (hokInstance.medicineXPPlayerOnly && hokInstance.logPlayerXPToChat ? playerGetsXP : loggingXP);
 
             if (healAmount > 0f) {
 
@@ -289,33 +285,44 @@ namespace HealOnKillUpdated {
 
         private int DoMedicineSkillup(Agent a, float amount) {
 
-            float finalAmount = (amount < 1f ? 1f : amount);
-            bool isHero = (a.Character != null && a.Character.IsHero);
+            float finalAmount = Math.Max(amount, 1f);
+            
+            Agent leader = a.Team?.Leader;
 
-            if (isHero) {
-                    CharacterObject character = LookupCharacter(a.Character.Id);
-                    if (character != null) {
-                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
-                    }
-            }    
-            else {
-                Agent leader = a.Team?.Leader;
-                if (leader?.Character != null) {
+            CharacterObject character,
+                            leaderCharacter;
 
-                    CharacterObject character = LookupCharacter(leader.Character.Id);
 
-                    if (character != null) {
+            if (a.Character?.IsHero == true) {
+           
+                character = LookupCharacter(a.Character.Id);
 
-                        float manCountReduction = a.Team.ActiveAgents.Count * 0.2f;
-                        finalAmount /= manCountReduction;
-                        finalAmount = (finalAmount < 1f ? 1f : finalAmount);
-
-                        character.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
-                    }
+                if (character != null && character.HeroObject != null) {
+                    character.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
                 }
-            } 
 
-            return (int)finalAmount;
+                return (int)finalAmount;
+            }    
+
+            if (leader?.Character != null) 
+            {
+
+                leaderCharacter = LookupCharacter(leader.Character.Id);
+
+                if (leaderCharacter != null && leaderCharacter.HeroObject != null) {
+              
+                    int activeAgents = Math.Max(a.Team.ActiveAgents.Count, 1);
+                    float manCountReduction = Math.Max((float)activeAgents * 0.2f, 1f);
+
+                    finalAmount = Math.Max(finalAmount / manCountReduction, 1f);
+
+                    leaderCharacter.HeroObject.AddSkillXp(DefaultSkills.Medicine, finalAmount);
+
+                    return (int)finalAmount;
+                }
+            }
+           
+            return 0;
         }
 
 

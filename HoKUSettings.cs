@@ -169,7 +169,7 @@ namespace HealOnKillUpdated {
                 friendlyAITroopLifeLeechPercent = 0.20f,
                 enemyAITroopLifeLeechPercent = 0.20f,
                 minHealOnKill = 1,
-                minHealLifeLeech = 12,
+                minHealLifeLeech = 9,
                 healHorsesToo = true,
                 mountHealAmount = 0.5f,
                 allowRangedHealing = true,
